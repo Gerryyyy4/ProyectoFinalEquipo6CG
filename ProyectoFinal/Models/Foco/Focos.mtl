@@ -1,0 +1,19 @@
+newmtl Foco:Material_001
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd Vidrio.png
+Ni 1.45
+Ks 0.00 0.00 0.00
+map_Ks Vidrio_specular.png
+Ns 225.00
+newmtl Foco:Material_003
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd adorno.png
+Ni 1.45
+Ks 0.50 0.50 0.50
+Ns 225.00
