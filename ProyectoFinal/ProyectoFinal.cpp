@@ -37,7 +37,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(-100.0f, 2.0f, -25.0f));
+Camera  camera(glm::vec3(-100.0f, 50.0f, 250.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -1153,7 +1153,7 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
 		model = glm::translate(model, glm::vec3(0.0f, -0.20f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.1f, 1.0f, 0.1f));
+		model = glm::scale(model, glm::vec3(0.25f, 1.0f, 0.25f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		piso.Draw(lightingShader);
 
