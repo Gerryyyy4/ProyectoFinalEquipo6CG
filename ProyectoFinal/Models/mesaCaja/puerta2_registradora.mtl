@@ -1,0 +1,50 @@
+newmtl lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd madera.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Madera_specular.png
+Ns 18.00
+newmtl lambert5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd marco.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks SpecularMarco.png
+Ns 18.00
+newmtl lambert6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Vidrio.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Vidrio_specular.png
+Ns 18.00
+newmtl lambert7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Cerradura.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Cerradura_specular.png
+Ns 18.00
+newmtl lambert8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd cajaRegistradora.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks CajaRegistradora_specular.png
+Ns 18.00

@@ -1,0 +1,17 @@
+newmtl lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd paginas_texture.jpg
+Ni 1.00
+newmtl phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd libros4_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Specular_Libros1.png
+Ns 18.00
