@@ -275,7 +275,7 @@ int main()
 
 
 	//Fachada
-	Model fachada((char*)"Models/Fachada/fachada.obj");
+	Model fachadaRestaurante((char*)"Models/Fachada/fachada.obj");
 	Model ventanas((char*)"Models/Fachada/ventanas.obj");
 	Model ascensor((char*)"Models/Fachada/ascensor.obj");
 	Model puertaAnimada1((char*)"Models/Fachada/puertaAnimada1.obj");
