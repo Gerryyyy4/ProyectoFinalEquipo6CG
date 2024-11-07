@@ -1,0 +1,75 @@
+newmtl fachada1:initialShadingGroup
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+newmtl fachada1:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd madera_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks madera_Specular.png
+Ns 18.00
+newmtl fachada1:phong2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd ladrillos_texure.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks ladrillos_Specular.png
+Ns 18.00
+newmtl fachada1:phong4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd puerta_madera.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl fachada1:phong5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd escalera_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks escalera_specular.png
+Ns 18.00
+newmtl fachada1:phong6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture_elevador1.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Specular_elevador1.png
+Ns 18.00
+newmtl fachada1:phong8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd exterior_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks SpecularExterior.png
+Ns 18.00
+newmtl ventanas:phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Vidrio.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Vidrio_specular.png
+Ns 18.00

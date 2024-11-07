@@ -1,0 +1,99 @@
+newmtl PuertaAnimada3:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl PuertaAnimada4:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl PuertaAnimada5:phong4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd puerta_madera.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl ascensor:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorAbajo1:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorAbajo2:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorArriba1:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorArriba2:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorDerecha:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl puertaAscensorIzquierda:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
