@@ -275,7 +275,7 @@ int main()
 
 
 	//Fachada
-	Model fachadaRestaurante((char*)"Models/Fachada/fachada.obj");
+	Model fachadaRestaurante((char*)"Models/FachadaRestaurante/FachadaRestaurante.obj");
 	Model ventanas((char*)"Models/Fachada/ventanas.obj");
 	Model ascensor((char*)"Models/Fachada/ascensor.obj");
 	Model puertaAnimada1((char*)"Models/Fachada/puertaAnimada1.obj");
@@ -291,9 +291,9 @@ int main()
 
 	//Animaciones Complejas
 
-	Model baseFuente((char*)"Models/Fachada/baseFuente.obj");
-	Model baseAgua((char*)"Models/Fachada/AguaBase.obj");
-	Model aguaFuente((char*)"Models/Fachada/AguaFuente.obj");
+	Model baseFuente((char*)"Models/Fuente/baseFuente.obj");
+	Model baseAgua((char*)"Models/Fuente/AguaBase.obj");
+	Model aguaFuente((char*)"Models/Fuente/AguaFuente.obj");
 	Model postal((char*)"Models/AnimPostal/Postal.obj");
 	Model resorte((char*)"Models/AnimPostal/resorte.obj");
 	Model resorteInanimado((char*)"Models/AnimPostal/resorteInanimado.obj");
@@ -1145,7 +1145,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		fachada.Draw(lightingShader);
+		fachadaRestaurante.Draw(lightingShader);
 
 		//Piso
 		model = glm::mat4(1);
