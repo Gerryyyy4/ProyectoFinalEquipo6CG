@@ -137,7 +137,7 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].posY = posY;
 	KeyFrame[FrameIndex].posZ = posZ;
 	
-	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	//KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
 	
 
 	FrameIndex++;
@@ -149,7 +149,7 @@ void resetElements(void)
 	posY = KeyFrame[0].posY;
 	posZ = KeyFrame[0].posZ;
 
-	rotRodIzq = KeyFrame[0].rotRodIzq;
+	//rotRodIzq = KeyFrame[0].rotRodIzq;
 
 }
 
@@ -276,16 +276,16 @@ int main()
 
 	//Fachada
 	Model fachadaRestaurante((char*)"Models/FachadaRestaurante/FachadaRestaurante.obj");
-	Model ventanas((char*)"Models/Fachada/ventanas.obj");
-	Model ascensor((char*)"Models/Fachada/ascensor.obj");
-	Model puertaAnimada1((char*)"Models/Fachada/puertaAnimada1.obj");
-	Model puertaAnimada2((char*)"Models/Fachada/puertaAnimada2.obj");
-	Model puertaAscensorAbajo1((char*)"Models/Fachada/puertaAscensorAbajo1.obj");
-	Model puertaAscensorAbajo2((char*)"Models/Fachada/puertaAscensorAbajo2.obj");
-	Model puertaAscensorArriba1((char*)"Models/Fachada/puertaAscensorArriba1.obj");
-	Model puertaAscensorArriba2((char*)"Models/Fachada/puertaAscensorArriba2.obj");
-	Model puertaAscensorDerecha((char*)"Models/Fachada/puertaAscensorDerecha.obj");
-	Model puertaAscensorIzquierda((char*)"Models/Fachada/puertaAscensorIzquierda.obj");
+	Model ventanas((char*)"Models/FachadaRestaurante/ventanasRestaurante.obj");
+	Model ascensor((char*)"Models/FachadaRestaurante/ascensor.obj");
+	Model puertaAnimada1((char*)"Models/FachadaRestaurante/puertaAnimada1.obj");
+	Model puertaAnimada2((char*)"Models/FachadaRestaurante/puertaAnimada2.obj");
+	Model puertaAscensorAbajo1((char*)"Models/FachadaRestaurante/puertaAscensorAbajo1.obj");
+	Model puertaAscensorAbajo2((char*)"Models/FachadaRestaurante/puertaAscensorAbajo2.obj");
+	Model puertaAscensorArriba1((char*)"Models/FachadaRestaurante/puertaAscensorArriba1.obj");
+	Model puertaAscensorArriba2((char*)"Models/FachadaRestaurante/puertaAscensorArriba2.obj");
+	Model puertaAscensorDerecha((char*)"Models/FachadaRestaurante/puertaAscensorDerecha.obj");
+	Model puertaAscensorIzquierda((char*)"Models/FachadaRestaurante/puertaAscensorIzquierda.obj");
 	Model piso((char*)"Models/Piso/Piso.obj");
 	Model focos((char*)"Models/Foco/Focos.obj");
 
@@ -617,11 +617,13 @@ int main()
 
 		//Carga de modelo 
 		//Personaje
-		/*
+		
 		
 		view = camera.GetViewMatrix();
 		glm::mat4 model(1);
 		tmp = model = glm::translate(model, glm::vec3(0, 1, 0));
+
+		/*
 		model = glm::translate(model,glm::vec3(posX,posY,posZ));
 		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -1616,7 +1618,7 @@ void animacion()
 				posY += KeyFrame[playIndex].incY;
 				posZ += KeyFrame[playIndex].incZ;
 
-				rotRodIzq += KeyFrame[playIndex].rotInc;
+				//rotRodIzq += KeyFrame[playIndex].rotInc;
 
 				i_curr_steps++;
 			}
@@ -1716,7 +1718,7 @@ void DoMovement()
 		movCamera = 0.01f;//Manda una velocidad de 0.01 a la camara automatica
 
 	}
-
+/*/
 	if (keys[GLFW_KEY_2])
 	{
 		if (rotRodIzq<80.0f)
@@ -1729,7 +1731,7 @@ void DoMovement()
 		if (rotRodIzq>-45)
 			rotRodIzq -= 1.0f;
 		
-	}
+	}*/
 	//ANIMACION POSTALES
 	if (animActivPostales)
 	{
@@ -1752,7 +1754,7 @@ void DoMovement()
 			if (traslacionDinero <= -0.3f)
 			{
 				finAnimDinero = true;
-				std::this_thread::sleep_for(std::chrono::seconds(1));
+				//std::this_thread::sleep_for(std::chrono::seconds(1));
 			}
 
 		}
@@ -1780,7 +1782,7 @@ void DoMovement()
 			if (traslacionPuertaMesa1 >= 0.35f)
 			{
 				animActivPuertaMesa2 = true;
-				std::this_thread::sleep_for(std::chrono::seconds(1));
+				//std::this_thread::sleep_for(std::chrono::seconds(1));
 			}
 
 		}
