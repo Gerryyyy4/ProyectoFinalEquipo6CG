@@ -1,0 +1,120 @@
+newmtl initialShadingGroup
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+newmtl pasted__lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd AguaFuente.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl pasted__lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd marmol2.jpg
+Ni 1.00
+newmtl pasted__lambert5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Marmol1.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd madera_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks madera_Specular.png
+Ns 18.00
+newmtl phong2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd ladrillos_textura.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks ladrillos_Specular.png
+Ns 18.00
+newmtl phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Vidrio.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Vidrio_specular.png
+Ns 18.00
+newmtl phong4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd puerta_madera.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd escalera_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks escalera_specular.png
+Ns 18.00
+newmtl phong6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd texture_elevador1.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Specular_elevador1.png
+Ns 18.00
+newmtl phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd elevador_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks elevador_Specular.png
+Ns 18.00
+newmtl phong8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd exterior_textura.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks SpecularExterior.png
+Ns 18.00
+newmtl phong9SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd AnimAgua_texture.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks AnimAgua_specular.png
+Ns 18.00
