@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib Piso.mtl
+mtllib piso.mtl
 g default
 v -2500.000000 0.000000 1250.000000
 v -2500.000000 0.000000 2500.000000
@@ -117,8 +117,8 @@ vn 0.000000 1.000000 0.000000
 vn 0.000000 1.000000 0.000000
 vn 0.000000 1.000000 0.000000
 s off
-g Piso3D:Mesh
-usemtl Piso3D:lambert2SG
+g Piso:Mesh
+usemtl Piso:lambert2SG
 f 1/1/1 2/2/2 3/3/3 4/4/4
 f 4/4/5 3/3/6 5/5/7 6/6/8
 f 6/6/9 5/5/10 7/7/11 8/8/12
