@@ -37,7 +37,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(-100.0f, 40.0f, 100.0f));
+Camera  camera(glm::vec3(0.0f, 20.0f, -100.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -91,11 +91,9 @@ EstadoAscensor estadoAscensor = ABAJO;
 
 float tiempoAnimacion = 0.0f;
 // Keyframes
-float posX = PosIni.x, posY = PosIni.y, posZ = PosIni.z;
-float rotMusloIzq = 0, rotMusloDer = 0, rotRodIzq= 0, rotRodDer = 0, rotBrazoIzq = 0, rotBrazoDer = 0, trasTorso = 0;
-float trasRodIzq = 0, trasRodDer = 0, trasMusloIzq = 0, trasMusloDer = 0, trasBrazoIzq = 0, trasBrazoDer = 0;
+float posX =PosIni.x, posY = PosIni.y, posZ = PosIni.z;
 
-#define MAX_FRAMES 21
+#define MAX_FRAMES 9
 int i_max_steps = 190;
 int i_curr_steps = 0;
 typedef struct _frame
@@ -107,47 +105,8 @@ typedef struct _frame
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
-	//PERSONA
 	float rotRodIzq;
-	float rotIncIzq;
-	float rotRodDer;
-	float rotIncDer;
-	float rotMusloIzq;
-	float rotIncMusloIzq;
-	float rotMusloDer;
-	float rotIncMusloDer;
-	float rotBrazoIzq;
-	float rotIncBrazoIzq;
-	float rotBrazoDer;
-	float rotIncBrazoDer;
-	float trasTorso;
-	float trasRodIzq;
-	float trasRodDer;
-	float trasMusloIzq;
-	float trasMusloDer;
-	float trasBrazoIzq;
-	float trasBrazoDer;
-	float trasIncTorso;
-	float trasIncBrazoIzq;
-	float trasIncBrazoDer;
-	float trasIncMusloIzq;
-	float trasIncMusloDer;
-	float trasIncRodIzq;
-	float trasIncRodloDer;
-
-	///ASCENSOR
-	float trasAscensor;
-	float trasIncAsc;
-	float traslPuertaArriba1;
-	float traslPuertaArriba2;
-	float trasIncPuertasArriba;
-	float trasPuertaAbajo1;
-	float trasPuertaAbajo2;
-	float trasIncPuertasAbajo;
-	float trasPuertaAscIzq;
-	float trasPuertaAscDer;
-	float trasIncPuertasAsc;
-
+	float rotInc;
 
 }FRAME;
 
@@ -178,12 +137,7 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].posY = posY;
 	KeyFrame[FrameIndex].posZ = posZ;
 	
-	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
-	KeyFrame[FrameIndex].rotRodDer = rotRodDer;
-	KeyFrame[FrameIndex].rotMusloIzq = rotMusloIzq;
-	KeyFrame[FrameIndex].rotMusloDer = rotMusloDer;
-	KeyFrame[FrameIndex].rotBrazoIzq = rotBrazoIzq;
-	KeyFrame[FrameIndex].rotBrazoDer = rotBrazoDer;
+	//KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
 	
 
 	FrameIndex++;
@@ -206,7 +160,7 @@ void interpolation(void)
 	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
 	
-	KeyFrame[playIndex].rotIncIzq = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
 
 }
 
@@ -275,14 +229,8 @@ int main()
 	Shader animShaderA1("Shaders/animAgua.vs", "Shaders/animAgua.frag");
 	Shader animShaderA2("Shaders/animFuente.vs", "Shaders/animFuente.frag");
 	Shader animShaderResorte("Shaders/animResorte.vs", "Shaders/animResorte.frag");
+	Shader animCafe("Shaders/animCafe.vs", "Shaders/animCafe.frag");
 
-	/*Model BotaDer((char*)"Models/Personaje/bota.obj");
-	Model PiernaDer((char*)"Models/Personaje/piernader.obj");
-	Model PiernaIzq((char*)"Models/Personaje/piernaizq.obj");
-	Model Torso((char*)"Models/Personaje/torso.obj");
-	Model BrazoDer((char*)"Models/Personaje/brazoder.obj");
-	Model BrazoIzq((char*)"Models/Personaje/brazoizq.obj");
-	Model Cabeza((char*)"Models/Personaje/cabeza.obj");*/
 
 	//Objetos 
 	Model postalBase((char*)"Models/ExpositorPostales/ExpositorPostal.obj");
@@ -320,7 +268,7 @@ int main()
 	Model libros8((char*)"Models/Libros8/Libros8.obj");
 
 
-	//Fachada Restaurante
+	//Fachada
 	Model fachadaRestaurante((char*)"Models/FachadaRestaurante/FachadaRestaurante.obj");
 	Model ventanas((char*)"Models/FachadaRestaurante/ventanasRestaurante.obj");
 	Model ascensor((char*)"Models/FachadaRestaurante/ascensor.obj");
@@ -332,12 +280,8 @@ int main()
 	Model puertaAscensorArriba2((char*)"Models/FachadaRestaurante/puertaAscensorArriba2.obj");
 	Model puertaAscensorDerecha((char*)"Models/FachadaRestaurante/puertaAscensorDerecha.obj");
 	Model puertaAscensorIzquierda((char*)"Models/FachadaRestaurante/puertaAscensorIzquierda.obj");
-	Model piso((char*)"Models/Piso/Piso.obj");
 	Model focos((char*)"Models/Foco/Focos.obj");
-	Model fachadaHabitaciones((char*)"Models/Habitaciones/hotelHabitaciones.obj");
-	//Model Habitacion((char*)"Models/Habitaciones/Habitacion2.obj");
-	Model vidriosHabitaciones((char*)"Models/Habitaciones/vidrios.obj");
-	
+
 	//Animaciones Complejas
 
 	Model baseFuente((char*)"Models/Fuente/baseFuente.obj");
@@ -346,13 +290,33 @@ int main()
 	Model postal((char*)"Models/AnimPostal/Postal.obj");
 	Model resorte((char*)"Models/AnimPostal/resorte.obj");
 	Model resorteInanimado((char*)"Models/AnimPostal/resorteInanimado.obj");
-	Model personaTorso((char*)"Models/Persona/torso.obj");
-	Model personaBrazo1((char*)"Models/Persona/brazo1.obj");
-	Model personaBrazo2((char*)"Models/Persona/brazo2.obj");
-	Model personaMuslo1((char*)"Models/Persona/muslo1.obj");
-	Model personaMuslo2((char*)"Models/Persona/muslo2.obj");
-	Model personaPierna1((char*)"Models/Persona/pierna1.obj");
-	Model personaPierna2((char*)"Models/Persona/pierna2.obj");
+
+	//alberca
+	Model zona_alberca((char*)"Models/Spa-Lobby-Alberca/zona_alberca.obj");	
+	Model agua_alberca((char*)"Models/Spa-Lobby-Alberca/agua_alberca.obj");	
+	
+	//Lobby
+	Model lobby((char*)"Models/Spa-Lobby-Alberca/zona_lobby.obj");
+	Model vidrios_lobby((char*)"Models/Spa-Lobby-Alberca/vidrios_lobby.obj");
+
+	//Spa
+	Model spa((char*)"Models/Spa-Lobby-Alberca/zona_spa.obj");
+
+	//cafe
+	Model cafe((char*)"Models/Cafe/cafe.obj");
+	Model burbujas_cafe((char*)"Models/Cafe/burbujas_cafe.obj");
+
+	//Hotel
+	Model hotel((char*)"Models/Spa-Lobby-Alberca/zona_hotel.obj");	
+	
+	//Restaurante
+	Model zona_restaurante((char*)"Models/Spa-Lobby-Alberca/zona_restaurante.obj");
+
+	//Piso
+	Model piso((char*)"Models/Spa-Lobby-Alberca/piso.obj");	
+	
+	//Tienda de regalos
+	Model tienda((char*)"Models/Spa-Lobby-Alberca/zona_tienda.obj");
 
 	// Build and compile our shader program
 
@@ -365,7 +329,7 @@ int main()
 		KeyFrame[i].incY = 0;
 		KeyFrame[i].incZ = 0;
 		KeyFrame[i].rotRodIzq = 0;
-		KeyFrame[i].rotIncIzq = 0;
+		KeyFrame[i].rotInc = 0;
 	}
 
 
@@ -556,7 +520,7 @@ int main()
 	{
 
 		// Calculate deltatime of current frame
-		GLfloat currentFrame = glfwGetTime() * 5;
+		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -679,836 +643,800 @@ int main()
 		glm::mat4 model(1);
 		tmp = model = glm::translate(model, glm::vec3(0, 1, 0));
 
-		/*
-		model = glm::translate(model,glm::vec3(posX,posY,posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Torso.Draw(lightingShader);
-
-	
-
-		//Pierna Izq
-		view = camera.GetViewMatrix();
-		model = glm::translate(tmp, glm::vec3(-0.5f, 0.0f, -0.1f));
-		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::rotate(model, glm::radians(-rotRodIzq), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		PiernaDer.Draw(lightingShader);
-	//	Pie Izq
-		view = camera.GetViewMatrix();
-		model = glm::translate(model, glm::vec3(0, -0.9f, -0.2f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		BotaDer.Draw(lightingShader);
-
-		//Pierna Der
-		view = camera.GetViewMatrix();
-		model = glm::translate(tmp, glm::vec3(0.5f, 0.0f, -0.1f));
-		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-
-		PiernaIzq.Draw(lightingShader);
-		//Pie Der
-		view = camera.GetViewMatrix();
-		model = glm::translate(model, glm::vec3(0, -0.9f, -0.2f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		BotaDer.Draw(lightingShader);
-
-		//Brazo derecho
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(-rotRodIzq), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-0.75f, 2.5f, 0));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		BrazoDer.Draw(lightingShader);
-
-	//	Brazo Izquierdo
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.75f, 2.5f, 0));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		BrazoIzq.Draw(lightingShader);
-
-		//Cabeza
-		view = camera.GetViewMatrix();
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		Cabeza.Draw(lightingShader);
-	
-		//Traslucidez
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		//objTras.Draw(lightingShader);
-		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
-		glBindVertexArray(0);*/
-
-
-		//FOCOS
-		// 		
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::translate(model, glm::vec3(30.0f, 27.5f, 50.0f));
-		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		focos.Draw(lightingShader);
-		model = glm::translate(model, glm::vec3(250.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		focos.Draw(lightingShader);
-		model = glm::translate(model, glm::vec3(250.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		focos.Draw(lightingShader);
-
-
-		//Objetos inanimados
-		//PIRAMIDE
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.17f, 5.5f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.3f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-
-
-
-		// #####  CRANEO ####
-
-		//Estante 1 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(5.95f, 0.09f, 4.1f));
-		model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.45f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.53f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-
-		//Estante 2
-		model = glm::translate(model, glm::vec3(1.6f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.18f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		//
-
-		model = glm::translate(model, glm::vec3(0.0f, -0.23f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.18f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		//
-		model = glm::translate(model, glm::vec3(0.0f, -0.23f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.18f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		//
-
-		model = glm::translate(model, glm::vec3(-0.0f, -0.25f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.18f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoPiramide.Draw(lightingShader);
-
-
-		// 3
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(8.2f, 0.09f, 4.1f));
-		model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.45f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.53f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		adornoCraneo.Draw(lightingShader);
-
-		// ####################### LIBROS  #####################
-		//lIBROS1
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(9.6f, 1.025f, 4.15f));
-		model = glm::scale(model, glm::vec3(0.85f, 0.85f, 0.85f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, -0.405f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros2.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros2.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, -0.35f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros4.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros4.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.875f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros5.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros5.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.35f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros6.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros6.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.4f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros7.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.405f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros8.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		libros8.Draw(lightingShader);
-
-
-		//Estante Guayaberas
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(2.8f, 0.07f, 3.7f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante1.Draw(lightingShader);
-
-		//Estante Artesnaias
-		model = glm::translate(model, glm::vec3(1.5f, -0.02f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante3.Draw(lightingShader);
-
-		//Estante Libros
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante2.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		estante2.Draw(lightingShader);
-
-		//GUAYABERAS
-		//Gayaberas1_1
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(2.45f, 0.475f, 4.175f));
-		model = glm::scale(model, glm::vec3(2.0f, 1.4f, 0.95f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_1.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_1.Draw(lightingShader);
-
-		//Guayabera 1_2
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_2.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_2.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_2.Draw(lightingShader);
-
-		//Guayabera 1_3
-
-		model = glm::translate(model, glm::vec3(0.22f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_3.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_3.Draw(lightingShader);
-
-		//Guayabera 1_4
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_4.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_4.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_4.Draw(lightingShader);
-
-		//Guayabera 1_5
-
-		model = glm::translate(model, glm::vec3(0.22f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_5.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_5.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_5.Draw(lightingShader);
-
-		//Guayabera 1_6
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_6.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_6.Draw(lightingShader);
-
-		model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera1_6.Draw(lightingShader);
-
-
-		//Guayabera 2_1
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(2.6f, -0.12f, 4.175f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_1.Draw(lightingShader);
-
-		//Guayabera 2_2
-		model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_2.Draw(lightingShader);
-
-		//Guayabera 2_3
-		model = glm::translate(model, glm::vec3(0.725f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_3.Draw(lightingShader);
-
-		//Guayabera 2_4
-		model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_4.Draw(lightingShader);
-
-		//Guayabera 2_5
-		model = glm::translate(model, glm::vec3(0.725f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_5.Draw(lightingShader);
-
-		//Guayabera 2_6
-		model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		guayabera2_6.Draw(lightingShader);
-
-		// ########################   FACHADA  #################################################
-		// Fachada Final
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		fachadaRestaurante.Draw(lightingShader);
-
-		//Habitaciones
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		fachadaHabitaciones.Draw(lightingShader);
 		
-		/*model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		Habitacion.Draw(lightingShader);*/
-
+		
 		//Piso
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::translate(model, glm::vec3(0.0f, -0.20f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.25f, 1.0f, 0.25f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		piso.Draw(lightingShader);
-
+		
+		
+		//Tienda
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		//Ventanas
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		tienda.Draw(lightingShader);
+
+
+		//Spa
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		spa.Draw(lightingShader);			
+		
+				////Cafe
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		////model = glm::scale(model, glm::vec3(50.0f, 50.0f, 50.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//cafe.Draw(lightingShader);	
+		
+
+		//Alberca
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//alberca.Draw(lightingShader);
+
+		//Ventanas lobby
+		model = glm::mat4(1);
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.5);
-		ventanas.Draw(lightingShader);
-		
-		//Ventanas de las habitaciones
-		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		vidriosHabitaciones.Draw(lightingShader);
+		vidrios_lobby.Draw(lightingShader);
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
 
+		//lobby
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		baseFuente.Draw(lightingShader);
-
+		lobby.Draw(lightingShader);		
+		
+		//Hotel
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.51f, 5.65f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postal.Draw(lightingShader);
+		hotel.Draw(lightingShader);		
+		
+		//Alberca
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		zona_alberca.Draw(lightingShader);		
+		
+		
+		//Restaurante
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		zona_restaurante.Draw(lightingShader);
 
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		resorteInanimado.Draw(lightingShader);
+		////FOCOS
+		//// 		
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::translate(model, glm::vec3(30.0f, 27.5f, 50.0f));
+		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//focos.Draw(lightingShader);
+		//model = glm::translate(model, glm::vec3(250.0f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//focos.Draw(lightingShader);
+		//model = glm::translate(model, glm::vec3(250.0f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//focos.Draw(lightingShader);
+
+
+		////Objetos inanimados
+		////PIRAMIDE
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.17f, 5.5f));
+		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.3f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.2f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+
+
+
+		//// #####  CRANEO ####
+
+		////Estante 1 
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(5.95f, 0.09f, 4.1f));
+		//model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.45f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.53f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+
+		////Estante 2
+		//model = glm::translate(model, glm::vec3(1.6f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.18f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		////
+
+		//model = glm::translate(model, glm::vec3(0.0f, -0.23f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.18f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		////
+		//model = glm::translate(model, glm::vec3(0.0f, -0.23f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.18f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		////
+
+		//model = glm::translate(model, glm::vec3(-0.0f, -0.25f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.18f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.15f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoPiramide.Draw(lightingShader);
+
+
+		//// 3
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(8.2f, 0.09f, 4.1f));
+		//model = glm::scale(model, glm::vec3(0.65f, 0.65f, 0.65f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.45f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.53f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(-0.64f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//adornoCraneo.Draw(lightingShader);
+
+		// ####################### LIBROS  #####################
+		////lIBROS1
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(9.6f, 1.025f, 4.15f));
+		//model = glm::scale(model, glm::vec3(0.85f, 0.85f, 0.85f));
+		//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, -0.405f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros2.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros2.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, -0.35f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros4.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros4.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.875f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros5.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros5.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.35f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros6.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros6.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.4f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros7.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.405f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros8.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.425f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//libros8.Draw(lightingShader);
+
+
+		////Estante Guayaberas
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(2.8f, 0.07f, 3.7f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante1.Draw(lightingShader);
+
+		////Estante Artesnaias
+		//model = glm::translate(model, glm::vec3(1.5f, -0.02f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante3.Draw(lightingShader);
+
+		////Estante Libros
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante2.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//estante2.Draw(lightingShader);
+
+		////GUAYABERAS
+		////Gayaberas1_1
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(2.45f, 0.475f, 4.175f));
+		//model = glm::scale(model, glm::vec3(2.0f, 1.4f, 0.95f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_1.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_1.Draw(lightingShader);
+
+		////Guayabera 1_2
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_2.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_2.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_2.Draw(lightingShader);
+
+		////Guayabera 1_3
+
+		//model = glm::translate(model, glm::vec3(0.22f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_3.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_3.Draw(lightingShader);
+
+		////Guayabera 1_4
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_4.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_4.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_4.Draw(lightingShader);
+
+		////Guayabera 1_5
+
+		//model = glm::translate(model, glm::vec3(0.22f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_5.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_5.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_5.Draw(lightingShader);
+
+		////Guayabera 1_6
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_6.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_6.Draw(lightingShader);
+
+		//model = glm::translate(model, glm::vec3(0.07f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera1_6.Draw(lightingShader);
+
+
+		////Guayabera 2_1
+
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(2.6f, -0.12f, 4.175f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_1.Draw(lightingShader);
+
+		////Guayabera 2_2
+		//model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_2.Draw(lightingShader);
+
+		////Guayabera 2_3
+		//model = glm::translate(model, glm::vec3(0.725f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_3.Draw(lightingShader);
+
+		////Guayabera 2_4
+		//model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_4.Draw(lightingShader);
+
+		////Guayabera 2_5
+		//model = glm::translate(model, glm::vec3(0.725f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_5.Draw(lightingShader);
+
+		////Guayabera 2_6
+		//model = glm::translate(model, glm::vec3(0.4f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//guayabera2_6.Draw(lightingShader);
+
+		//// ########################   FACHADA  #################################################
+		//// Fachada Final
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//fachadaRestaurante.Draw(lightingShader);
+
+
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		////Ventanas
+		//glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.5);
+		//ventanas.Draw(lightingShader);
+		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
+
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//baseFuente.Draw(lightingShader);
+
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.51f, 5.65f));
+		//model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postal.Draw(lightingShader);
+
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//resorteInanimado.Draw(lightingShader);
 
 
 		// ################################   ANIMACIONES SIMPLES  ############################
 		//  #################### Animaciones simples de objetos #################
-		//expositor de POSTALES
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(7.0f, 0.35f, 5.65f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postalBase.Draw(lightingShader);
+		////expositor de POSTALES
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(7.0f, 0.35f, 5.65f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postalBase.Draw(lightingShader);
 
-		model = glm::rotate(model, glm::radians(rotPostales), glm::vec3(0.0f, -1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		expositorPostales.Draw(lightingShader);
-		//1
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_2
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_3
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_2
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_3
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_2
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_3
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
+		//model = glm::rotate(model, glm::radians(rotPostales), glm::vec3(0.0f, -1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//expositorPostales.Draw(lightingShader);
+		////1
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_2
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_3
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_2
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_3
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_2
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_3
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
 
-		//expositor de POSTALES 2
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(8.5f, 0.35f, 5.65f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postalBase.Draw(lightingShader);
+		////expositor de POSTALES 2
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(8.5f, 0.35f, 5.65f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postalBase.Draw(lightingShader);
 
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		expositorPostales.Draw(lightingShader);
-		//1
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_2
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//2_3
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_2
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//3_3
-		model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_1
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_2
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
-		//4_3
-		model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		postales.Draw(lightingShader);
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//expositorPostales.Draw(lightingShader);
+		////1
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_2
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////2_3
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_2
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////3_3
+		//model = glm::translate(model, glm::vec3(0.0f, 0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_1
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_2
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
+		////4_3
+		//model = glm::translate(model, glm::vec3(0.0f, -0.475f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//postales.Draw(lightingShader);
 
-		//Registradora
+		////Registradora
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		model = glm::translate(model, glm::vec3(traslacionDinero, 0.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		registrarDinero.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//model = glm::translate(model, glm::vec3(traslacionDinero, 0.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//registrarDinero.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		mesaRegistradora.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//mesaRegistradora.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslacionPuertaMesa1));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puerta1Registradora.Draw(lightingShader);
-
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puerta2Registradora.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslacionPuertaMesa1));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puerta1Registradora.Draw(lightingShader);
 
 
-		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.25);
-		ventanaMesa.Draw(lightingShader);
-		glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(4.5f, 0.15f, 5.65f));
+		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puerta2Registradora.Draw(lightingShader);
+
+
+		//glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.25);
+		//ventanaMesa.Draw(lightingShader);
+		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
 
 		// ##################### Animaciones simples Fachada ################################
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(-1.735f, 0.0f, 6.665f));
-		model = glm::rotate(model, glm::radians(rotPuerta1), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAnimada1.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(-1.735f, 0.0f, 6.665f));
+		//model = glm::rotate(model, glm::radians(rotPuerta1), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAnimada1.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(1.75f, 0.0f, 6.68f));
-		model = glm::rotate(model, glm::radians(rotPuerta2), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAnimada2.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(1.75f, 0.0f, 6.68f));
+		//model = glm::rotate(model, glm::radians(rotPuerta2), glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAnimada2.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(11.25f, 0.05f, 1.75f));
-		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		ascensor.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(11.25f, 0.05f, 1.75f));
+		//model = glm::translate(model, glm::vec3(0.0f, trasAscensor, 0.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//ascensor.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.650f, 3.765f, 1.41f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslPuertaArriba1));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorArriba1.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.650f, 3.765f, 1.41f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslPuertaArriba1));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorArriba1.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.650f, 3.765f, 2.075f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslPuertaArriba2));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorArriba2.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.650f, 3.765f, 2.075f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, traslPuertaArriba2));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorArriba2.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.650f, 0.75f, 1.415f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, trasPuertaAbajo1));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorAbajo1.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.650f, 0.75f, 1.415f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, trasPuertaAbajo1));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorAbajo1.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.650f, 0.75f, 2.09f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, trasPuertaAbajo2));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorAbajo2.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.650f, 0.75f, 2.09f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, trasPuertaAbajo2));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorAbajo2.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.825f, 0.785f, 1.485f));
-		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscIzq));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorIzquierda.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.825f, 0.785f, 1.485f));
+		//model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscIzq));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorIzquierda.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(10.825f, 0.785f, 2.0f));
-		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscDer));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		puertaAscensorDerecha.Draw(lightingShader);
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -250.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(10.825f, 0.785f, 2.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscDer));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//puertaAscensorDerecha.Draw(lightingShader);
 
 
 		glBindVertexArray(0);
@@ -1596,6 +1524,53 @@ int main()
 
 		glBindVertexArray(0);
 
+		//agua alberca
+		animShaderA1.Use();
+		tiempo = glfwGetTime();
+		modelLoc = glGetUniformLocation(animShaderA1.Program, "model");
+		viewLoc = glGetUniformLocation(animShaderA1.Program, "view");
+		projLoc = glGetUniformLocation(animShaderA1.Program, "projection");
+		// Set matrices
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(animShaderA1.Program, "activaTransparencia"), 0);
+		glUniform4f(glGetUniformLocation(animShaderA1.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.65);
+		glUniform1f(glGetUniformLocation(animShaderA1.Program, "time"), (tiempo));
+		agua_alberca.Draw(animShaderA1);
+		glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		glUniform4f(glGetUniformLocation(animShaderA1.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
+
+
+		glBindVertexArray(0);
+
+
+		//Burbujas Cafe
+		animCafe.Use();
+		tiempo3 = glfwGetTime();
+		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
+		modelLoc = glGetUniformLocation(animCafe.Program, "model");
+		viewLoc = glGetUniformLocation(animCafe.Program, "view");
+		projLoc = glGetUniformLocation(animCafe.Program, "projection");
+
+		// Set matrices
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+		glUniformMatrix4fv(glGetUniformLocation(animCafe.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(animCafe.Program, "time"), (tiempo3));
+		burbujas_cafe.Draw(animCafe);
+		glBindVertexArray(0);
 
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
@@ -1962,27 +1937,27 @@ void DoMovement()
 	// Camera controls
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
-		camera.ProcessKeyboard(FORWARD, deltaTime);
+		camera.ProcessKeyboard(FORWARD, deltaTime*15);
 
 	}
 
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
 	{
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		camera.ProcessKeyboard(BACKWARD, deltaTime*15);
 
 
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		camera.ProcessKeyboard(LEFT, deltaTime*15);
 
 
 	}
 
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+		camera.ProcessKeyboard(RIGHT, deltaTime*15);
 	}
 
 	if (keys[GLFW_KEY_Z]) {
