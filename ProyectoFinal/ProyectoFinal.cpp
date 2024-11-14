@@ -37,7 +37,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(-100.0f, 100.0f, 450.0f));
+Camera  camera(glm::vec3(-100.0f, 50.0f, 50.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -274,7 +274,7 @@ int main()
 	Model libros8((char*)"Models/Libros8/Libros8.obj");
 
 
-	//Fachada
+	//Fachada Restaurante
 	Model fachadaRestaurante((char*)"Models/FachadaRestaurante/FachadaRestaurante.obj");
 	Model ventanas((char*)"Models/FachadaRestaurante/ventanasRestaurante.obj");
 	Model ascensor((char*)"Models/FachadaRestaurante/ascensor.obj");
@@ -300,6 +300,13 @@ int main()
 	Model postal((char*)"Models/AnimPostal/Postal.obj");
 	Model resorte((char*)"Models/AnimPostal/resorte.obj");
 	Model resorteInanimado((char*)"Models/AnimPostal/resorteInanimado.obj");
+	Model personaTorso((char*)"Models/Persona/torso.obj");
+	Model personaBrazo1((char*)"Models/Persona/brazo1.obj");
+	Model personaBrazo2((char*)"Models/Persona/brazo2.obj");
+	Model personaMuslo1((char*)"Models/Persona/muslo1.obj");
+	Model personaMuslo2((char*)"Models/Persona/muslo2.obj");
+	Model personaPierna1((char*)"Models/Persona/pierna1.obj");
+	Model personaPierna2((char*)"Models/Persona/pierna2.obj");
 
 	// Build and compile our shader program
 
