@@ -288,7 +288,10 @@ int main()
 	Model puertaAscensorIzquierda((char*)"Models/FachadaRestaurante/puertaAscensorIzquierda.obj");
 	Model piso((char*)"Models/Piso/Piso.obj");
 	Model focos((char*)"Models/Foco/Focos.obj");
-
+	Model fachadaHabitaciones((char*)"Models/Habitaciones/hotelHabitaciones.obj");
+	//Model Habitacion((char*)"Models/Habitaciones/Habitacion2.obj");
+	Model vidriosHabitaciones((char*)"Models/Habitaciones/vidrios.obj");
+	
 	//Animaciones Complejas
 
 	Model baseFuente((char*)"Models/Fuente/baseFuente.obj");
@@ -1149,6 +1152,19 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		fachadaRestaurante.Draw(lightingShader);
 
+		//Habitaciones
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		fachadaHabitaciones.Draw(lightingShader);
+		
+		/*model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion.Draw(lightingShader);*/
+
 		//Piso
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-95.0f, 2.0f, -150.0f));
@@ -1167,6 +1183,14 @@ int main()
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.5);
 		ventanas.Draw(lightingShader);
+		
+		//Ventanas de las habitaciones
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		vidriosHabitaciones.Draw(lightingShader);
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
 
