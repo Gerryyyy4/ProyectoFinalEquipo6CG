@@ -37,7 +37,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(-100.0f, 50.0f, 50.0f));
+Camera  camera(glm::vec3(-100.0f, 40.0f, 100.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -91,9 +91,11 @@ EstadoAscensor estadoAscensor = ABAJO;
 
 float tiempoAnimacion = 0.0f;
 // Keyframes
-float posX =PosIni.x, posY = PosIni.y, posZ = PosIni.z;
+float posX = PosIni.x, posY = PosIni.y, posZ = PosIni.z;
+float rotMusloIzq = 0, rotMusloDer = 0, rotRodIzq= 0, rotRodDer = 0, rotBrazoIzq = 0, rotBrazoDer = 0, trasTorso = 0;
+float trasRodIzq = 0, trasRodDer = 0, trasMusloIzq = 0, trasMusloDer = 0, trasBrazoIzq = 0, trasBrazoDer = 0;
 
-#define MAX_FRAMES 9
+#define MAX_FRAMES 21
 int i_max_steps = 190;
 int i_curr_steps = 0;
 typedef struct _frame
@@ -105,8 +107,47 @@ typedef struct _frame
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
+	//PERSONA
 	float rotRodIzq;
-	float rotInc;
+	float rotIncIzq;
+	float rotRodDer;
+	float rotIncDer;
+	float rotMusloIzq;
+	float rotIncMusloIzq;
+	float rotMusloDer;
+	float rotIncMusloDer;
+	float rotBrazoIzq;
+	float rotIncBrazoIzq;
+	float rotBrazoDer;
+	float rotIncBrazoDer;
+	float trasTorso;
+	float trasRodIzq;
+	float trasRodDer;
+	float trasMusloIzq;
+	float trasMusloDer;
+	float trasBrazoIzq;
+	float trasBrazoDer;
+	float trasIncTorso;
+	float trasIncBrazoIzq;
+	float trasIncBrazoDer;
+	float trasIncMusloIzq;
+	float trasIncMusloDer;
+	float trasIncRodIzq;
+	float trasIncRodloDer;
+
+	///ASCENSOR
+	float trasAscensor;
+	float trasIncAsc;
+	float traslPuertaArriba1;
+	float traslPuertaArriba2;
+	float trasIncPuertasArriba;
+	float trasPuertaAbajo1;
+	float trasPuertaAbajo2;
+	float trasIncPuertasAbajo;
+	float trasPuertaAscIzq;
+	float trasPuertaAscDer;
+	float trasIncPuertasAsc;
+
 
 }FRAME;
 
@@ -137,7 +178,12 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].posY = posY;
 	KeyFrame[FrameIndex].posZ = posZ;
 	
-	//KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	KeyFrame[FrameIndex].rotRodDer = rotRodDer;
+	KeyFrame[FrameIndex].rotMusloIzq = rotMusloIzq;
+	KeyFrame[FrameIndex].rotMusloDer = rotMusloDer;
+	KeyFrame[FrameIndex].rotBrazoIzq = rotBrazoIzq;
+	KeyFrame[FrameIndex].rotBrazoDer = rotBrazoDer;
 	
 
 	FrameIndex++;
@@ -160,7 +206,7 @@ void interpolation(void)
 	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
 	
-	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+	KeyFrame[playIndex].rotIncIzq = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
 
 }
 
@@ -319,7 +365,7 @@ int main()
 		KeyFrame[i].incY = 0;
 		KeyFrame[i].incZ = 0;
 		KeyFrame[i].rotRodIzq = 0;
-		KeyFrame[i].rotInc = 0;
+		KeyFrame[i].rotIncIzq = 0;
 	}
 
 
@@ -510,7 +556,7 @@ int main()
 	{
 
 		// Calculate deltatime of current frame
-		GLfloat currentFrame = glfwGetTime();
+		GLfloat currentFrame = glfwGetTime() * 5;
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -539,9 +585,9 @@ int main()
 		// == ==========================
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.8f, 0.7f, 0.3f); 
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.9f, 0.5f, 0.2f); 
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 0.8f, 0.5f); 
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.85f, 0.8f, 0.6f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.95f, 0.85f, 0.6f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 0.95f, 0.8f);
 
 
 
