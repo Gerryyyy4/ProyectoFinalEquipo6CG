@@ -1,0 +1,2 @@
+﻿  ProyectoFinal.cpp
+C:\Users\santi\OneDrive\Documentos\GitHub\ProyectoFinalEquipo6CG\ProyectoFinal\ProyectoFinal.cpp(5,10): error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
