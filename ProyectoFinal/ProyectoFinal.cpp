@@ -70,6 +70,18 @@ bool animActivCerrar1 = false;
 bool animActivAbrir2 = false;
 bool animActivCerrar2 = false;
 bool activAnimAscensor = false;
+bool actOpHab = false;
+bool actCloseHab = false;
+bool actOpBath = false;
+bool actCloseBath = false;
+bool actOpRegadera = false;
+bool actCloseRegadera = false;
+bool actOpBalcon = false;
+bool actCloseBalcon = false;
+float opHab = 0.0f;
+float opBath = 0.0f;
+float opRegadera = 0.0f;
+float opBalcon = 0.0f;
 float rotPostales = 0.0f;
 float traslacionDinero = 0.0f;
 float traslacionPuertaMesa1 = 0.0f;
@@ -230,6 +242,7 @@ int main()
 	Shader animShaderA2("Shaders/animFuente.vs", "Shaders/animFuente.frag");
 	Shader animShaderResorte("Shaders/animResorte.vs", "Shaders/animResorte.frag");
 	Shader animCafe("Shaders/animCafe.vs", "Shaders/animCafe.frag");
+	Shader animTele("Shaders/animTele.vs", "Shaders/animTele.frag");
 
 
 	//Objetos 
@@ -281,6 +294,25 @@ int main()
 	Model puertaAscensorDerecha((char*)"Models/FachadaRestaurante/puertaAscensorDerecha.obj");
 	Model puertaAscensorIzquierda((char*)"Models/FachadaRestaurante/puertaAscensorIzquierda.obj");
 	Model focos((char*)"Models/Foco/Focos.obj");
+
+	//Habitaciones
+	Model fachadaHabitaciones((char*)"Models/Habitaciones/hotelHabitaciones.obj");
+	Model HabitacionP((char*)"Models/Habitaciones/HabitacionPrincipal.obj");
+	Model Habitacion1((char*)"Models/Habitaciones/Habitacion1.obj");
+	Model Habitacion2((char*)"Models/Habitaciones/Habitacion2.obj");
+	Model Habitacion3((char*)"Models/Habitaciones/Habitacion3.obj");
+	Model Habitacion4((char*)"Models/Habitaciones/Habitacion4.obj");
+	Model Habitacion5((char*)"Models/Habitaciones/Habitacion5.obj");
+	Model Habitacion6((char*)"Models/Habitaciones/Habitacion6.obj");
+	Model Habitacion7((char*)"Models/Habitaciones/Habitacion7.obj");
+	Model vidriosHabitaciones((char*)"Models/Habitaciones/vidrios.obj");
+	Model marcoBanioP((char*)"Models/Habitaciones/marcobanioprincipal.obj");
+	Model vidrioBanioP((char*)"Models/Habitaciones/vidriobanioprincipal.obj");
+	Model marcoBalconP((char*)"Models/Habitaciones/marcobalconprincipal.obj");
+	Model vidrioBalconP((char*)"Models/Habitaciones/vidriobalconprincipal.obj");
+	Model tele((char*)"Models/Habitaciones/tele.obj");
+	Model puertaHabitacion((char*)"Models/Habitaciones/puertaHabitacion.obj");
+	Model puertaBanio((char*)"Models/Habitaciones/puertaBanio.obj");
 
 	//Animaciones Complejas
 
@@ -644,7 +676,91 @@ int main()
 		tmp = model = glm::translate(model, glm::vec3(0, 1, 0));
 
 		
-		
+		//Habitaciones
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		fachadaHabitaciones.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion1.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion2.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion3.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion4.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion5.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion6.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		Habitacion7.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		HabitacionP.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(-5.308f, 1.104f, 8.776f));
+		model = glm::rotate(model, glm::radians(opHab), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		puertaHabitacion.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(-6.862f, 1.115f, 11.095f));
+		model = glm::rotate(model, glm::radians(opBath), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		puertaBanio.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		marcoBanioP.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(opBalcon, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		marcoBalconP.Draw(lightingShader);
+
 		//Piso
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
@@ -694,11 +810,11 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		lobby.Draw(lightingShader);		
 		
-		//Hotel
-		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		hotel.Draw(lightingShader);		
+		////Hotel
+		//model = glm::mat4(1);
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		//hotel.Draw(lightingShader);		
 		
 		//Alberca
 		model = glm::mat4(1);
@@ -1198,6 +1314,31 @@ int main()
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 0.5);
 		ventanas.Draw(lightingShader);
+
+		//Ventanas de las habitaciones
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		vidrioBanioP.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(opBalcon, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		vidrioBalconP.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		vidriosHabitaciones.Draw(lightingShader);
+
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
 
@@ -1532,6 +1673,24 @@ int main()
 
 		glBindVertexArray(0);
 
+		animTele.Use();
+		tiempo = 3.0f * glfwGetTime();
+		modelLoc = glGetUniformLocation(animTele.Program, "model");
+		viewLoc = glGetUniformLocation(animTele.Program, "view");
+		projLoc = glGetUniformLocation(animTele.Program, "projection");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(animTele.Program, "time"), tiempo);
+		tele.Draw(animTele);
+
+		glBindVertexArray(0);
+
 
 		//Anime Resorte
 		animShaderResorte.Use();
@@ -1773,6 +1932,33 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 			LightP1 = glm::vec3(0.0f, 0.0f, 0.0f);
 	}
+
+	if (keys[GLFW_KEY_O]) {
+		actOpHab = true;
+
+	}
+	if (keys[GLFW_KEY_U]) {
+		actCloseHab = true;
+
+	}
+
+	if (keys[GLFW_KEY_P]) {
+		actOpBath = true;
+
+	}
+	if (keys[GLFW_KEY_I]) {
+		actCloseBath = true;
+
+	}
+
+	if (keys[GLFW_KEY_Y]) {
+		actOpBalcon = true;
+
+	}
+	if (keys[GLFW_KEY_T]) {
+		actCloseBalcon = true;
+
+	}
 }
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
@@ -1942,6 +2128,56 @@ void DoMovement()
 
 		}
 	}
+
+	//PuertaHabitacion
+	if (actOpHab) {
+		if (int(opHab) == 95) {
+			actOpHab = false;
+		}
+		opHab += 1.0f;
+
+	}
+
+	if (actCloseHab) {
+		if (int(opHab) == 0) {
+			actCloseHab = false;
+		}
+		opHab -= 1.0f;
+	}
+
+	//PuertaBaño
+	if (actOpBath) {
+		if (int(opBath) == 95) {
+			actOpBath = false;
+		}
+		opBath += 1.0f;
+
+	}
+
+	if (actCloseBath) {
+		if (int(opBath) == 0) {
+			actCloseBath = false;
+		}
+		opBath -= 0.1f;
+	}
+	
+	//PuertaBalcon
+	if (actOpBalcon) {
+		if (opBalcon == -1.5) {
+			actOpBalcon = false;
+		}
+		opBalcon -= 0.1f;
+		printf("%f\n", opBalcon);
+
+	}
+
+	if (actCloseBalcon) {
+		if (int(opBalcon) == 0) {
+			actCloseBalcon = false;
+		}
+		opBalcon += 0.1f;
+	}
+
 	
 
 	//Mov Personaje

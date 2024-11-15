@@ -107,6 +107,73 @@ map_Kd Wood_D.jpg
 Ni 1.00
 Ks 0.35 0.35 0.35
 Ns 32.00
+newmtl SET_3_CLOSET:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd iron_bump.JPG
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks Iron-reflect.JPG
+Ns 18.00
+newmtl SET_3_CLOSET:phong2SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka bathroom_furniture_01_wood.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl SET_3_CLOSET:phong3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka iron_bump.JPG
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks ironbumpspecular.png
+Ns 18.00
+newmtl SET_3_CLOSET:uploads_files_5187725_untitled:phong3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka DoorWorkflow_DefaultMaterial_BaseColor.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks DoorWorkflow_DefaultMaterial_Height.jpg
+Ns 18.00
+newmtl SET_3_CLOSET:uploads_files_5187725_untitled:phong4SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka bathroom_furniture_01_wood.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl SET_3_CLOSET:uploads_files_5187725_untitled:phong5SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka Iron-bump.JPG
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks ironbumpspecular.png
+Ns 18.00
+newmtl SET_3_CLOSET:uploads_files_5187725_untitled:uploads_files_4226151_Door_Final:phong2SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Ka Iron-bump.JPG
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
 newmtl baranda:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -267,7 +334,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd A.png
+map_Kd texturapapeldebaño.png
 Ni 1.00
 newmtl lambert2SG
 illum 4
@@ -304,6 +371,20 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd paredblancatexture.png
 Ni 1.00
+newmtl lambert10SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd pillowtexture.png
+Ni 1.00
+newmtl lambert11SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd camaTexture.png
+Ni 1.00
 newmtl lavamanos:initialShadingGroup
 illum 4
 Kd 0.00 0.00 0.00
@@ -312,9 +393,10 @@ Tf 1.00 1.00 1.00
 Ni 1.00
 newmtl lavamanos:phong17SG
 illum 4
-Kd 1.00 1.00 1.00
+Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd marmotexure.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
@@ -341,6 +423,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Ka Iron-bump.JPG
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
@@ -354,15 +437,6 @@ Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
 newmtl phong1SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd Wood_D.jpg
-Ni 1.00
-Ks 0.50 0.50 0.50
-Ns 18.00
-newmtl phong2SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
@@ -504,6 +578,33 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd mirrortexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong24SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd marmotexure.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong25SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong26SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd bathroom_furniture_01_wood.jpg
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
