@@ -58,6 +58,7 @@ bool active;
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
 GLfloat lastFrame = 0.0f;  	// Time of last frame
 float tiempo;
+float tiempotele;
 float tiempo2;
 float tiempo3;
 bool animActivPostales = false;
@@ -313,6 +314,7 @@ int main()
 	Model tele((char*)"Models/Habitaciones/tele.obj");
 	Model puertaHabitacion((char*)"Models/Habitaciones/puertaHabitacion.obj");
 	Model puertaBanio((char*)"Models/Habitaciones/puertaBanio.obj");
+	Model cortinasprincipal((char*)"Models/Habitaciones/cortinasPrincipal.obj");
 
 	//Animaciones Complejas
 
@@ -750,7 +752,7 @@ int main()
 		model = glm::mat4(1);
 		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
+		//model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		marcoBanioP.Draw(lightingShader);
 
@@ -760,6 +762,13 @@ int main()
 		model = glm::translate(model, glm::vec3(opBalcon, 0.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		marcoBalconP.Draw(lightingShader);
+
+
+		model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		cortinasprincipal.Draw(lightingShader);
 
 		//Piso
 		model = glm::mat4(1);
@@ -1307,6 +1316,9 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 753.5f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));
+
+		//OBJETOS CON TRANSPARENCIA
+
 		////Ventanas
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1319,7 +1331,7 @@ int main()
 		model = glm::mat4(1);
 		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
+		//model = glm::translate(model, glm::vec3(0.0f, .0f, opBath));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		vidrioBanioP.Draw(lightingShader);
@@ -1338,6 +1350,13 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		vidriosHabitaciones.Draw(lightingShader);
+
+		//Ventanas lobby
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		vidrios_lobby.Draw(lightingShader);
 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
@@ -1674,7 +1693,7 @@ int main()
 		glBindVertexArray(0);
 
 		animTele.Use();
-		tiempo = 3.0f * glfwGetTime();
+		tiempotele = 30.0f * glfwGetTime();
 		modelLoc = glGetUniformLocation(animTele.Program, "model");
 		viewLoc = glGetUniformLocation(animTele.Program, "view");
 		projLoc = glGetUniformLocation(animTele.Program, "projection");
@@ -1686,7 +1705,7 @@ int main()
 		//model = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(animTele.Program, "time"), tiempo);
+		glUniform1f(glGetUniformLocation(animTele.Program, "time"), tiempotele);
 		tele.Draw(animTele);
 
 		glBindVertexArray(0);
@@ -2158,24 +2177,25 @@ void DoMovement()
 		if (int(opBath) == 0) {
 			actCloseBath = false;
 		}
-		opBath -= 0.1f;
+		opBath -= 1.0f;
 	}
 	
 	//PuertaBalcon
 	if (actOpBalcon) {
-		if (opBalcon == -1.5) {
+		if (int(opBalcon) == -2) {
 			actOpBalcon = false;
 		}
-		opBalcon -= 0.1f;
-		printf("%f\n", opBalcon);
+		opBalcon -= 0.01f;
+		//printf("%f\n", opBalcon);
 
 	}
 
 	if (actCloseBalcon) {
-		if (int(opBalcon) == 0) {
+		if (opBalcon >= 0.0f) {
 			actCloseBalcon = false;
 		}
-		opBalcon += 0.1f;
+		opBalcon += 0.01f;
+		printf("%f\n", opBalcon);
 	}
 
 	
