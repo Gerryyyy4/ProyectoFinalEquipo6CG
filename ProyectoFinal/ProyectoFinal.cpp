@@ -511,7 +511,7 @@ void saveFrame(void)
 	KeyFrame[8].rotRodDer = rotRodDer;
 	KeyFrame[8].rotMusloIzq = rotMusloIzq;
 	KeyFrame[8].rotMusloDer = rotMusloDer;
-	KeyFrame[8].rotTorso = rotTorso;
+	KeyFrame[8].rotTorso = rotTorso + 180.0f;
 	KeyFrame[8].trasTorsoX = trasTorsoX;
 	KeyFrame[8].trasRodIzqX = trasRodIzqX - 0.52f;
 	KeyFrame[8].trasRodDerX = trasRodDerX + 0.244f;
@@ -582,7 +582,6 @@ void resetElements(void)
 	trasPuertaAscIzq = KeyFrame[0].trasPuertaAscIzq;
 	trasPuertaAscDer = KeyFrame[0].trasPuertaAscDer;
 
-	//Ascensor
 
 }
 
@@ -2185,11 +2184,56 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
 		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
-		model = glm::translate(model, glm::vec3(-10.3f, 0.665f, 1.75f));
+		model = glm::translate(model, glm::vec3(-10.35f, 0.666f, 1.75f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscDer));
+		model = glm::translate(model, glm::vec3(trasTorsoX, trasTorsoY, trasTorsoZ));
+		model = glm::rotate(model, glm::radians(rotTorso), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		torsoPersona.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
+		model = glm::translate(model, glm::vec3(-10.376f, 0.236f, 1.753f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(trasRodIzqX, trasRodIzqY, trasRodIzqZ));
+		model = glm::rotate(model, glm::radians(rotRodIzq), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		pierna1Persona.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
+		model = glm::translate(model, glm::vec3(-10.228f, 0.235f, 1.725f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(trasRodDerX, trasRodDerY, trasRodDerZ));
+		model = glm::rotate(model, glm::radians(rotRodDer), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		pierna2Persona.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
+		model = glm::translate(model, glm::vec3(-10.296f, 0.429f, 1.75f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(trasMusloIzqX, trasMusloIzqY, trasMusloIzqZ));
+		model = glm::rotate(model, glm::radians(rotMusloIzq), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		muslo2Persona.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
+		model = glm::scale(model, glm::vec3(15.0f, 150.0f, 15.0f));;
+		model = glm::translate(model, glm::vec3(-10.399f, 0.425f, 1.75f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(trasMusloDerX, trasMusloDerY, trasMusloDerZ));
+		model = glm::rotate(model, glm::radians(rotMusloDer), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		muslo1Persona.Draw(lightingShader);
 
 		glBindVertexArray(0);
 		// #####################################     ANIMACIONES   COMPLEJAS #########################################
@@ -2420,7 +2464,32 @@ void animacion()
 				posY += KeyFrame[playIndex].incY;
 				posZ += KeyFrame[playIndex].incZ;
 
-				//rotRodIzq += KeyFrame[playIndex].rotInc;
+				rotRodIzq += KeyFrame[playIndex].rotIncIzq;
+				rotRodDer += KeyFrame[playIndex].rotIncDer;
+				rotMusloIzq  += KeyFrame[playIndex].rotIncMusloIzq;
+				rotMusloDer = KeyFrame[playIndex].rotIncMusloDer;
+				rotTorso = KeyFrame[playIndex].rotIncTorso;
+				trasTorsoX = KeyFrame[playIndex].trasIncTorsoX;
+				trasRodIzqX = KeyFrame[playIndex].trasIncRodIzqX;
+				trasRodDerX = KeyFrame[playIndex].trasIncRodDerX;
+				trasMusloIzqX = KeyFrame[playIndex].trasIncMusloIzqX;
+				trasMusloDerX = KeyFrame[playIndex].trasIncMusloDerX;
+				trasTorsoY = KeyFrame[playIndex].trasIncTorsoY;
+				trasRodIzqY = KeyFrame[playIndex].trasIncRodIzqY;
+				trasRodDerY = KeyFrame[playIndex].trasIncRodDerY;
+				trasMusloIzqY = KeyFrame[playIndex].trasIncMusloIzqY;
+				trasMusloDerY = KeyFrame[playIndex].trasIncMusloDerY;
+				trasTorsoZ = KeyFrame[playIndex].trasIncTorsoZ;
+				trasRodIzqZ = KeyFrame[playIndex].trasIncRodIzqZ;
+				trasRodDerZ = KeyFrame[playIndex].trasIncRodDerZ;
+				trasMusloIzqZ = KeyFrame[playIndex].trasIncMusloIzqZ;
+				trasMusloDerZ = KeyFrame[playIndex].trasIncMusloDerZ;
+
+				//Ascensor	
+				trasPuertaAbajo1 = KeyFrame[playIndex].trasIncPuertasAbajo;
+				trasPuertaAbajo2 = KeyFrame[playIndex].trasIncPuertasAbajo;
+				trasPuertaAscIzq = KeyFrame[playIndex].trasIncPuertasAsc;
+				trasPuertaAscDer = KeyFrame[playIndex].trasIncPuertasAsc;
 
 				i_curr_steps++;
 			}
