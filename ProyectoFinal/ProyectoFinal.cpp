@@ -771,9 +771,9 @@ int main()
 	
 	//Persona
 	Model torsoPersona((char*)"Models/Persona/torso.obj");
-	Model muslo1Persona((char*)"Models/AnimPostal/muslo1.obj");
+	Model muslo1Persona((char*)"Models/Persona/muslo1.obj");
 	Model pierna1Persona((char*)"Models/Persona/pierna1.obj");
-	Model muslo2Persona((char*)"Models/AnimPostal/muslo2.obj");
+	Model muslo2Persona((char*)"Models/Persona/muslo2.obj");
 	Model pierna2Persona((char*)"Models/Persona/pierna2.obj");
 
 	//alberca
@@ -2226,7 +2226,7 @@ int main()
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
-		model = glm::scale(model, glm::vec3(15.0f, 150.0f, 15.0f));;
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
 		model = glm::translate(model, glm::vec3(-10.399f, 0.425f, 1.75f));
 		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(trasMusloDerX, trasMusloDerY, trasMusloDerZ));
