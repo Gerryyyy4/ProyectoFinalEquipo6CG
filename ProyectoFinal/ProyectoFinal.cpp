@@ -242,7 +242,6 @@ int main()
 	Shader animShaderA1("Shaders/animAgua.vs", "Shaders/animAgua.frag");
 	Shader animShaderA2("Shaders/animFuente.vs", "Shaders/animFuente.frag");
 	Shader animShaderResorte("Shaders/animResorte.vs", "Shaders/animResorte.frag");
-	Shader animCafe("Shaders/animCafe.vs", "Shaders/animCafe.frag");
 	Shader animTele("Shaders/animTele.vs", "Shaders/animTele.frag");
 
 
@@ -359,6 +358,7 @@ int main()
 	
 	//Tienda de regalos
 	Model tienda((char*)"Models/Spa-Lobby-Alberca/zona_tienda.obj");
+	Model vidrio_mostrador((char*)"Models/Spa-Lobby-Alberca/vidrio_mostrador.obj");
 
 	// Build and compile our shader program
 
@@ -1428,7 +1428,14 @@ int main()
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		vidrios_lobby.Draw(lightingShader);
+		vidrios_lobby.Draw(lightingShader);		
+		
+		//Vidrio mostrador
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		vidrio_mostrador.Draw(lightingShader);
 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);

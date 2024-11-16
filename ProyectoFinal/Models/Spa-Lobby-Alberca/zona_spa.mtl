@@ -1,3 +1,12 @@
+newmtl AguaBase:pasted__lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd AguaFuente.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
 newmtl FachadaRestaurante:initialShadingGroup
 illum 4
 Kd 0.00 0.00 0.00
@@ -68,17 +77,8 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd psio_texture.png
-Ni 1.00
-newmtl avikaFBXASC045curved_poolSG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.59 0.59 0.59
-Tf 1.00 1.00 1.00
 map_Kd 1024-1.png
 Ni 1.00
-Ks 0.00 0.00 0.00
-Ns 0.00
 newmtl blinn1SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -287,6 +287,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd textura_mostrador.jpg
 Ni 1.00
 newmtl lambert75SG
 illum 4
@@ -322,6 +323,48 @@ Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd textura_cafe.png
+Ni 1.00
+newmtl lambert89SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_cafe_claro.jpg
+Ni 1.00
+newmtl lambert93SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_alberca.jpg
+Ni 1.00
+newmtl lambert95SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_pasto.jpg
+Ni 1.00
+newmtl lambert97SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_piso_concreto.jpg
+Ni 1.00
+newmtl lambert99SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 1024-1.png
+Ni 1.00
+newmtl lambert100SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_piso_concreto.jpg
 Ni 1.00
 newmtl lobby:initialShadingGroup
 illum 4
@@ -402,6 +445,22 @@ map_Kd textura_plateada_monitor.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
+newmtl mostrador:lambert61SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_mostrador.jpg
+Ni 1.00
+newmtl mostrador:phongE1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_metal.jpg
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 0.06
 newmtl pasted__blinn1SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -595,7 +654,7 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd textura_blanca.png
 Ni 1.00
-newmtl phong33SG
+newmtl phong37SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
@@ -604,6 +663,34 @@ map_Kd Vidrio.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
+newmtl phong38SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Vidrio.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl phong39SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_plateada_monitor.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl puerta:orig_orig_orig_orig_orig_orig_orig_10057_wooden_door_v1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 10057_wooden_door_v1_diffuse.jpg
+map_Ka 10057_wooden_door_v1_diffuse.jpg
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 10.00
 newmtl puerta2:lambert33SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -669,6 +756,15 @@ bump  -bm 0 Humano_01Business_01_Normal.jpg
 Ni 1.50
 Ks 0.00 0.00 0.00
 Ns 10.00
+newmtl vidrio_mostrador1:phongE2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd textura_vidrio.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 0.06
 newmtl vidrios_lobby3:phong34SG
 illum 4
 Kd 0.00 0.00 0.00
