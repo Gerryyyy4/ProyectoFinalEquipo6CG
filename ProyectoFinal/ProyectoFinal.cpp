@@ -2208,6 +2208,85 @@ void DoMovement()
 
 		}
 	}
+	//ASCENSOR
+	if (activAnimAscensor) {
+
+		switch (estadoAscensor) {
+		case ABAJO:
+			if (estadoPuertaAbajo == CERRADA) {
+				estadoPuertaAbajo = ABRIENDO;
+				tiempoAnimacion = 0.0f;
+			}
+			else if (estadoPuertaAbajo == ABRIENDO) {
+				trasPuertaAbajo1 -= 0.05f * tiempoAnimacion;
+				trasPuertaAbajo2 += 0.05f * tiempoAnimacion;
+				trasPuertaAscIzq -= 0.0375 * tiempoAnimacion;
+				trasPuertaAscDer += 0.0375 * tiempoAnimacion;
+				if (trasPuertaAbajo1 <= -0.6f) {
+					estadoPuertaAbajo = ABIERTA;
+					//std::this_thread::sleep_for(std::chrono::seconds(1));
+				}
+			}
+			else if (estadoPuertaAbajo == ABIERTA) {
+				estadoPuertaAbajo = CERRANDO;
+			}
+			else if (estadoPuertaAbajo == CERRANDO) {
+				trasPuertaAbajo1 += 0.05f * tiempoAnimacion;
+				trasPuertaAbajo2 -= 0.05f * tiempoAnimacion;
+				trasPuertaAscIzq += 0.0375 * tiempoAnimacion;
+				trasPuertaAscDer -= 0.0375 * tiempoAnimacion;
+				if (trasPuertaAbajo1 >= 0.0f) {
+					estadoPuertaAbajo = CERRADA;
+					estadoAscensor = SUBIENDO;
+				}
+			}
+			break;
+
+		case SUBIENDO:
+			trasAscensor += 0.1f * tiempoAnimacion;
+			if (trasAscensor >= 3.0f) {
+				estadoAscensor = ARRIBA;
+				estadoPuertaArriba = ABRIENDO;
+			}
+			break;
+
+		case ARRIBA:
+			if (estadoPuertaArriba == ABRIENDO) {
+				traslPuertaArriba1 -= 0.05f * tiempoAnimacion;
+				traslPuertaArriba2 += 0.05f * tiempoAnimacion;
+				trasPuertaAscIzq -= 0.0375 * tiempoAnimacion;
+				trasPuertaAscDer += 0.0375 * tiempoAnimacion;
+				if (traslPuertaArriba1 <= -0.6f) {
+					estadoPuertaArriba = ABIERTA;
+					//std::this_thread::sleep_for(std::chrono::seconds(1));
+				}
+			}
+			else if (estadoPuertaArriba == ABIERTA) {
+				estadoPuertaArriba = CERRANDO;
+			}
+			else if (estadoPuertaArriba == CERRANDO) {
+				traslPuertaArriba1 += 0.05f * tiempoAnimacion;
+				traslPuertaArriba2 -= 0.05f * tiempoAnimacion;
+				trasPuertaAscIzq += 0.0375 * tiempoAnimacion;
+				trasPuertaAscDer -= 0.0375 * tiempoAnimacion;
+				if (traslPuertaArriba1 >= 0.0f) {
+					estadoPuertaArriba = CERRADA;
+					estadoAscensor = BAJANDO;
+				}
+			}
+			break;
+
+		case BAJANDO:
+			trasAscensor -= 0.1f;
+			if (trasAscensor <= 0.0f) {
+				estadoAscensor = ABAJO;
+				estadoPuertaAbajo = CERRADA;
+				activAnimAscensor = false;
+			}
+			break;
+		}
+
+	}
 
 	//PuertaHabitacion
 	if (actOpHab) {
