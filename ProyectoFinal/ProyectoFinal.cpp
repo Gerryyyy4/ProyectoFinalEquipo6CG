@@ -358,7 +358,7 @@ int main()
 	
 	//Tienda de regalos
 	Model tienda((char*)"Models/Spa-Lobby-Alberca/zona_tienda.obj");
-	Model vidrio_mostrador((char*)"Models/Spa-Lobby-Alberca/vidrio_mostrador.obj");
+	Model vidrio_mostrador((char*)"Models/Spa-Lobby-Alberca/vidrio_,mostrador.obj");
 
 	// Build and compile our shader program
 
@@ -1844,26 +1844,6 @@ int main()
 		glBindVertexArray(0);
 
 
-		//Burbujas Cafe
-		animCafe.Use();
-		tiempo3 = glfwGetTime();
-		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
-		modelLoc = glGetUniformLocation(animCafe.Program, "model");
-		viewLoc = glGetUniformLocation(animCafe.Program, "view");
-		projLoc = glGetUniformLocation(animCafe.Program, "projection");
-
-		// Set matrices
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-
-		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
-		glUniformMatrix4fv(glGetUniformLocation(animCafe.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(animCafe.Program, "time"), (tiempo3));
-		burbujas_cafe.Draw(animCafe);
-		glBindVertexArray(0);
 
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
