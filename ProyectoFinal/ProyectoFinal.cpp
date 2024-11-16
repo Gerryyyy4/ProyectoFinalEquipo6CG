@@ -106,8 +106,16 @@ float tiempoAnimacion = 0.0f;
 // Keyframes
 float posX =PosIni.x, posY = PosIni.y, posZ = PosIni.z;
 
+//######################################################################################################################
+float rotMusloIzq = 0, rotMusloDer = 0, rotRodIzq = 0, rotRodDer = 0, rotTorso = 0;
+float trasRodIzqX = 0, trasRodDerX = 0, trasMusloIzqX = 0, trasMusloDerX = 0, trasTorsoX = 0;
+float trasRodIzqY = 0, trasRodDerY = 0, trasMusloIzqY = 0, trasMusloDerY = 0, trasTorsoY = 0;
+float trasRodIzqZ = 0, trasRodDerZ = 0, trasMusloIzqZ = 0, trasMusloDerZ = 0, trasTorsoZ = 0;
+//#########################################################################################################
+//##########################################################################################################
 #define MAX_FRAMES 9
-int i_max_steps = 190;
+//####################################################
+int i_max_steps = 300;
 int i_curr_steps = 0;
 typedef struct _frame
 {
@@ -118,8 +126,58 @@ typedef struct _frame
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
+
+	// ###########################################################################3
+	// ###########################  PERSONA #######################################
+	// ######################################################################33####
 	float rotRodIzq;
-	float rotInc;
+	float rotIncIzq;
+	float rotRodDer;
+	float rotIncDer;
+	float rotMusloIzq;
+	float rotIncMusloIzq;
+	float rotMusloDer;
+	float rotIncMusloDer;
+	float rotTorso;
+	float rotIncTorso;
+	float trasTorsoX;
+	float trasRodIzqX;
+	float trasRodDerX;
+	float trasMusloIzqX;
+	float trasMusloDerX;
+	float trasIncTorsoX;
+	float trasIncMusloIzqX;
+	float trasIncMusloDerX;
+	float trasIncRodIzqX;
+	float trasIncRodDerX;
+	float trasTorsoY;
+	float trasRodIzqY;
+	float trasRodDerY;
+	float trasMusloIzqY;
+	float trasMusloDerY;
+	float trasIncTorsoY;
+	float trasIncMusloIzqY;
+	float trasIncMusloDerY;
+	float trasIncRodIzqY;
+	float trasIncRodDerY;
+	float trasTorsoZ;
+	float trasRodIzqZ;
+	float trasRodDerZ;
+	float trasMusloIzqZ;
+	float trasMusloDerZ;
+	float trasIncTorsoZ;
+	float trasIncMusloIzqZ;
+	float trasIncMusloDerZ;
+	float trasIncRodIzqZ;
+	float trasIncRodDerZ;
+
+	///ASCENSOR
+	float trasPuertaAbajo1;
+	float trasPuertaAbajo2;
+	float trasIncPuertasAbajo;
+	float trasPuertaAscIzq;
+	float trasPuertaAscDer;
+	float trasIncPuertasAsc;
 
 }FRAME;
 
@@ -145,15 +203,343 @@ void saveFrame(void)
 {
 
 	printf("posx %f\n", posX);
-	
-	KeyFrame[FrameIndex].posX = posX;
-	KeyFrame[FrameIndex].posY = posY;
-	KeyFrame[FrameIndex].posZ = posZ;
-	
-	//KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
-	
+	//Primer keyFrame
+	KeyFrame[0].posX = posX;
+	KeyFrame[0].posY = posY;
+	KeyFrame[0].posZ = posZ;
 
-	FrameIndex++;
+	//#####################################################################
+	// 	// ###########################  PERSONA #######################################
+	// ######################################################################33####
+		 //Persona
+	KeyFrame[0].rotRodIzq = rotRodIzq;
+	KeyFrame[0].rotRodDer = rotRodDer;
+	KeyFrame[0].rotMusloIzq = rotMusloIzq;
+	KeyFrame[0].rotMusloDer = rotMusloDer;
+	KeyFrame[0].rotTorso = rotTorso;
+	KeyFrame[0].trasTorsoX = trasTorsoX;
+	KeyFrame[0].trasRodIzqX = trasRodIzqX;
+	KeyFrame[0].trasRodDerX = trasRodDerX;
+	KeyFrame[0].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[0].trasMusloDerX = trasMusloDerX;
+	KeyFrame[0].trasTorsoY = trasTorsoY;
+	KeyFrame[0].trasRodIzqY = trasRodIzqY;
+	KeyFrame[0].trasRodDerY = trasRodDerY;
+	KeyFrame[0].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[0].trasMusloDerY = trasMusloDerY;
+	KeyFrame[0].trasTorsoZ = trasTorsoZ;
+	KeyFrame[0].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[0].trasRodDerZ = trasRodDerZ;
+	KeyFrame[0].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[0].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[1].trasAscensor = trasAscensor;
+	//KeyFrame[1].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[1].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[0].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[0].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[0].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[0].trasPuertaAscDer = trasPuertaAscDer;
+
+	//Primer keyFrame
+	KeyFrame[1].posX = posX;
+	KeyFrame[1].posY = posY;
+	KeyFrame[1].posZ = posZ;
+
+	//#####################################################################
+	// 	// ###########################  PERSONA #######################################
+	// ######################################################################33####
+		 //Persona
+	KeyFrame[1].rotRodIzq = rotRodIzq;
+	KeyFrame[1].rotRodDer = rotRodDer;
+	KeyFrame[1].rotMusloIzq = rotMusloIzq;
+	KeyFrame[1].rotMusloDer = rotMusloDer;
+	KeyFrame[1].rotTorso = rotTorso;
+	KeyFrame[1].trasTorsoX = trasTorsoX;
+	KeyFrame[1].trasRodIzqX = trasRodIzqX;
+	KeyFrame[1].trasRodDerX = trasRodDerX;
+	KeyFrame[1].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[1].trasMusloDerX = trasMusloDerX;
+	KeyFrame[1].trasTorsoY = trasTorsoY;
+	KeyFrame[1].trasRodIzqY = trasRodIzqY;
+	KeyFrame[1].trasRodDerY = trasRodDerY;
+	KeyFrame[1].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[1].trasMusloDerY = trasMusloDerY;
+	KeyFrame[1].trasTorsoZ = trasTorsoZ;
+	KeyFrame[1].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[1].trasRodDerZ = trasRodDerZ;
+	KeyFrame[1].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[1].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[1].trasAscensor = trasAscensor;
+	//KeyFrame[1].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[1].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[1].trasPuertaAbajo1 = trasPuertaAbajo1 - 0.6f;
+	KeyFrame[1].trasPuertaAbajo2 = trasPuertaAbajo2 + 0.6f;
+	KeyFrame[1].trasPuertaAscIzq = trasPuertaAscIzq - 0.45f;
+	KeyFrame[1].trasPuertaAscDer = trasPuertaAscDer + 0.45f;
+
+	//Segundo KeyFrame
+	KeyFrame[2].posX = posX;
+	KeyFrame[2].posY = posY;
+	KeyFrame[2].posZ = posZ;
+
+	//#####################################################################
+	// 	// ###########################  PERSONA #######################################
+	// ######################################################################33####
+		 //Persona
+		 //Persona
+	KeyFrame[2].rotRodIzq = rotRodIzq;
+	KeyFrame[2].rotRodDer = rotRodDer;
+	KeyFrame[2].rotMusloIzq = rotMusloIzq - 45.0f;
+	KeyFrame[2].rotMusloDer = rotMusloDer;
+	KeyFrame[2].rotTorso = rotTorso;
+	KeyFrame[2].trasTorsoX = trasTorsoX;
+	KeyFrame[2].trasRodIzqX = trasRodIzqX;
+	KeyFrame[2].trasRodDerX = trasRodDerX;
+	KeyFrame[2].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[2].trasMusloDerX = trasMusloDerX;
+	KeyFrame[2].trasTorsoY = trasTorsoY;
+	KeyFrame[2].trasRodIzqY = trasRodIzqY + 0.053f;
+	KeyFrame[2].trasRodDerY = trasRodDerY;
+	KeyFrame[2].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[2].trasMusloDerY = trasMusloDerY;
+	KeyFrame[2].trasTorsoZ = trasTorsoZ;
+	KeyFrame[2].trasRodIzqZ = trasRodIzqZ + 0.126f;
+	KeyFrame[2].trasRodDerZ = trasRodDerZ;
+	KeyFrame[2].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[2].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[2].trasAscensor = trasAscensor;
+	//KeyFrame[2].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[2].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[2].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[2].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[2].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[2].trasPuertaAscDer = trasPuertaAscDer;
+
+	// ######################################################################33####
+	// tercer keyframe
+	KeyFrame[3].posX = posX;
+	KeyFrame[3].posY = posY;
+	KeyFrame[3].posZ = posZ;
+	//Persona
+	KeyFrame[3].rotRodIzq = rotRodIzq - 45.0f;
+	KeyFrame[3].rotRodDer = rotRodDer;
+	KeyFrame[3].rotMusloIzq = rotMusloIzq;
+	KeyFrame[3].rotMusloDer = rotMusloDer;
+	KeyFrame[3].rotTorso = rotTorso;
+	KeyFrame[3].trasTorsoX = trasTorsoX;
+	KeyFrame[3].trasRodIzqX = trasRodIzqX;
+	KeyFrame[3].trasRodDerX = trasRodDerX;
+	KeyFrame[3].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[3].trasMusloDerX = trasMusloDerX;
+	KeyFrame[3].trasTorsoY = trasTorsoY;
+	KeyFrame[3].trasRodIzqY = trasRodIzqY;
+	KeyFrame[3].trasRodDerY = trasRodDerY;
+	KeyFrame[3].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[3].trasMusloDerY = trasMusloDerY;
+	KeyFrame[3].trasTorsoZ = trasTorsoZ;
+	KeyFrame[3].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[3].trasRodDerZ = trasRodDerZ;
+	KeyFrame[3].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[3].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[3].trasAscensor = trasAscensor;
+	//KeyFrame[3].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[3].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[3].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[3].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[3].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[3].trasPuertaAscDer = trasPuertaAscDer;
+
+	// ######################################################################33####
+// cuarto keyframe
+	KeyFrame[4].posX = posX;
+	KeyFrame[4].posY = posY;
+	KeyFrame[4].posZ = posZ;
+	//Persona
+	KeyFrame[4].rotRodIzq = rotRodIzq + 45.0f;
+	KeyFrame[4].rotRodDer = rotRodDer;
+	KeyFrame[4].rotMusloIzq = rotMusloIzq + 45.0f;
+	KeyFrame[4].rotMusloDer = rotMusloDer + 35.0f;
+	KeyFrame[4].rotTorso = rotTorso;
+	KeyFrame[4].trasTorsoX = trasTorsoX;
+	KeyFrame[4].trasRodIzqX = trasRodIzqX;
+	KeyFrame[4].trasRodDerX = trasRodDerX;
+	KeyFrame[4].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[4].trasMusloDerX = trasMusloDerX;
+	KeyFrame[4].trasTorsoY = trasTorsoY;
+	KeyFrame[4].trasRodIzqY = trasRodIzqY - 0.053f;
+	KeyFrame[4].trasRodDerY = trasRodDerY + 0.41f;
+	KeyFrame[4].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[4].trasMusloDerY = trasMusloDerY;
+	KeyFrame[4].trasTorsoZ = trasTorsoZ + 0.328f;
+	KeyFrame[4].trasRodIzqZ = trasRodIzqZ + 0.126f;
+	KeyFrame[4].trasRodDerZ = trasRodDerZ + 0.204f;
+	KeyFrame[4].trasMusloIzqZ = trasMusloIzqZ + 0.328;
+	KeyFrame[4].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[4].trasAscensor = trasAscensor;
+	//KeyFrame[4].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[4].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[4].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[4].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[4].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[4].trasPuertaAscDer = trasPuertaAscDer;
+
+	///##########################################################################################
+	// quinto keyframe
+	KeyFrame[5].posX = posX;
+	KeyFrame[5].posY = posY;
+	KeyFrame[5].posZ = posZ;
+	//Persona
+	KeyFrame[5].rotRodIzq = rotRodIzq;
+	KeyFrame[5].rotRodDer = rotRodDer - 35.f;
+	KeyFrame[5].rotMusloIzq = rotMusloIzq;
+	KeyFrame[5].rotMusloDer = rotMusloDer - 80.0f;
+	KeyFrame[5].rotTorso = rotTorso;
+	KeyFrame[5].trasTorsoX = trasTorsoX;
+	KeyFrame[5].trasRodIzqX = trasRodIzqX;
+	KeyFrame[5].trasRodDerX = trasRodDerX;
+	KeyFrame[5].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[5].trasMusloDerX = trasMusloDerX;
+	KeyFrame[5].trasTorsoY = trasTorsoY;
+	KeyFrame[5].trasRodIzqY = trasRodIzqY;
+	KeyFrame[5].trasRodDerY = trasRodDerY;
+	KeyFrame[5].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[5].trasMusloDerY = trasMusloDerY;
+	KeyFrame[5].trasTorsoZ = trasTorsoZ;
+	KeyFrame[5].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[5].trasRodDerZ = trasRodDerZ;
+	KeyFrame[5].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[5].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[5].trasAscensor = trasAscensor;
+	//KeyFrame[5].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[5].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[5].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[5].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[5].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[5].trasPuertaAscDer = trasPuertaAscDer;
+
+	///##########################################################################################
+// sexto keyframe
+	KeyFrame[6].posX = posX;
+	KeyFrame[6].posY = posY;
+	KeyFrame[6].posZ = posZ;
+	//Persona
+	KeyFrame[6].rotRodIzq = rotRodIzq;
+	KeyFrame[6].rotRodDer = rotRodDer - 45.f;
+	KeyFrame[6].rotMusloIzq = rotMusloIzq;
+	KeyFrame[6].rotMusloDer = rotMusloDer;
+	KeyFrame[6].rotTorso = rotTorso;
+	KeyFrame[6].trasTorsoX = trasTorsoX;
+	KeyFrame[6].trasRodIzqX = trasRodIzqX;
+	KeyFrame[6].trasRodDerX = trasRodDerX;
+	KeyFrame[6].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[6].trasMusloDerX = trasMusloDerX;
+	KeyFrame[6].trasTorsoY = trasTorsoY;
+	KeyFrame[6].trasRodIzqY = trasRodIzqY;
+	KeyFrame[6].trasRodDerY = trasRodDerY;
+	KeyFrame[6].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[6].trasMusloDerY = trasMusloDerY;
+	KeyFrame[6].trasTorsoZ = trasTorsoZ;
+	KeyFrame[6].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[6].trasRodDerZ = trasRodDerZ;
+	KeyFrame[6].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[6].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[6].trasAscensor = trasAscensor;
+	//KeyFrame[6].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[6].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[6].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[6].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[6].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[6].trasPuertaAscDer = trasPuertaAscDer;
+
+	///##########################################################################################
+// septimo keyframe
+	KeyFrame[7].posX = posX;
+	KeyFrame[7].posY = posY;
+	KeyFrame[7].posZ = posZ;
+	//Persona
+	KeyFrame[7].rotRodIzq = rotRodIzq;
+	KeyFrame[7].rotRodDer = rotRodDer + 45.0f;
+	KeyFrame[7].rotMusloIzq = rotMusloIzq;
+	KeyFrame[7].rotMusloDer = rotMusloDer + 45.0f;
+	KeyFrame[7].rotTorso = rotTorso;
+	KeyFrame[7].trasTorsoX = trasTorsoX;
+	KeyFrame[7].trasRodIzqX = trasRodIzqX;
+	KeyFrame[7].trasRodDerX = trasRodDerX;
+	KeyFrame[7].trasMusloIzqX = trasMusloIzqX;
+	KeyFrame[7].trasMusloDerX = trasMusloDerX;
+	KeyFrame[7].trasTorsoY = trasTorsoY;
+	KeyFrame[7].trasRodIzqY = trasRodIzqY;
+	KeyFrame[7].trasRodDerY = trasRodDerY - 0.41f;
+	KeyFrame[7].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[7].trasMusloDerY = trasMusloDerY;
+	KeyFrame[7].trasTorsoZ = trasTorsoZ + 0.328f;
+	KeyFrame[7].trasRodIzqZ = trasRodIzqZ + 0.328f;
+	KeyFrame[7].trasRodDerZ = trasRodDerZ + 0.211f;
+	KeyFrame[7].trasMusloIzqZ = trasMusloIzqZ + 0.328;
+	KeyFrame[7].trasMusloDerZ = trasMusloDerZ + 0.328f;
+
+	//Ascensor	
+	//KeyFrame[7].trasAscensor = trasAscensor;
+	//KeyFrame[7].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[7].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[7].trasPuertaAbajo1 = trasPuertaAbajo1;
+	KeyFrame[7].trasPuertaAbajo2 = trasPuertaAbajo2;
+	KeyFrame[7].trasPuertaAscIzq = trasPuertaAscIzq;
+	KeyFrame[7].trasPuertaAscDer = trasPuertaAscDer;
+
+	// #####################################################################################
+	// Octavo keyframe
+	KeyFrame[8].posX = posX;
+	KeyFrame[8].posY = posY;
+	KeyFrame[8].posZ = posZ;
+	//Persona
+	KeyFrame[8].rotRodIzq = rotRodIzq;
+	KeyFrame[8].rotRodDer = rotRodDer;
+	KeyFrame[8].rotMusloIzq = rotMusloIzq;
+	KeyFrame[8].rotMusloDer = rotMusloDer;
+	KeyFrame[8].rotTorso = rotTorso;
+	KeyFrame[8].trasTorsoX = trasTorsoX;
+	KeyFrame[8].trasRodIzqX = trasRodIzqX - 0.52f;
+	KeyFrame[8].trasRodDerX = trasRodDerX + 0.244f;
+	KeyFrame[8].trasMusloIzqX = trasMusloIzqX + 0.117f;
+	KeyFrame[8].trasMusloDerX = trasMusloDerX - 0.95f;
+	KeyFrame[8].trasTorsoY = trasTorsoY;
+	KeyFrame[8].trasRodIzqY = trasRodIzqY;
+	KeyFrame[8].trasRodDerY = trasRodDerY;
+	KeyFrame[8].trasMusloIzqY = trasMusloIzqY;
+	KeyFrame[8].trasMusloDerY = trasMusloDerY;
+	KeyFrame[8].trasTorsoZ = trasTorsoZ;
+	KeyFrame[8].trasRodIzqZ = trasRodIzqZ;
+	KeyFrame[8].trasRodDerZ = trasRodDerZ;
+	KeyFrame[8].trasMusloIzqZ = trasMusloIzqZ;
+	KeyFrame[8].trasMusloDerZ = trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[8].trasAscensor = trasAscensor;
+	//KeyFrame[8].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[8].traslPuertaArriba2 = traslPuertaArriba2;
+	KeyFrame[8].trasPuertaAbajo1 = trasPuertaAbajo1 + 0.6f;
+	KeyFrame[8].trasPuertaAbajo2 = trasPuertaAbajo2 - 0.6f;
+	KeyFrame[8].trasPuertaAscIzq = trasPuertaAscIzq + 0.45f;
+	KeyFrame[8].trasPuertaAscDer = trasPuertaAscDer - 0.45f;
+	//##########################################################################
+	//#######################################################################################
+
+	//FrameIndex++;
 }
 
 void resetElements(void)
@@ -162,18 +548,77 @@ void resetElements(void)
 	posY = KeyFrame[0].posY;
 	posZ = KeyFrame[0].posZ;
 
-	//rotRodIzq = KeyFrame[0].rotRodIzq;
+	//#####################################################################
+	// 	// ###########################  PERSONA #######################################
+	// ######################################################################33####
+		 //Persona
+	rotRodIzq = KeyFrame[0].rotRodIzq;
+	rotRodDer = KeyFrame[0].rotRodDer;
+	rotMusloIzq = KeyFrame[0].rotMusloIzq;
+	rotMusloDer = KeyFrame[0].rotMusloDer;
+	rotTorso = KeyFrame[0].rotTorso;
+	trasTorsoX = KeyFrame[0].trasTorsoX;
+	trasRodIzqX = KeyFrame[0].trasRodIzqX;
+	trasRodDerX = KeyFrame[0].trasRodDerX;
+	trasMusloIzqX = KeyFrame[0].trasMusloIzqX;
+	trasMusloDerX = KeyFrame[0].trasMusloDerX;
+	trasTorsoY = KeyFrame[0].trasTorsoY;
+	trasRodIzqY = KeyFrame[0].trasRodIzqY;
+	trasRodDerY = KeyFrame[0].trasRodDerY;
+	trasMusloIzqY = KeyFrame[0].trasMusloIzqY;
+	trasMusloDerY = KeyFrame[0].trasMusloDerY;
+	trasTorsoZ = KeyFrame[0].trasTorsoZ;
+	trasRodIzqZ = KeyFrame[0].trasRodIzqZ;
+	trasRodDerZ = KeyFrame[0].trasRodDerZ;
+	trasMusloIzqZ = KeyFrame[0].trasMusloIzqZ;
+	trasMusloDerZ = KeyFrame[0].trasMusloDerZ;
+
+	//Ascensor	
+	//KeyFrame[1].trasAscensor = trasAscensor;
+	//KeyFrame[1].traslPuertaArriba1 = traslPuertaArriba1;
+	//KeyFrame[1].traslPuertaArriba2 = traslPuertaArriba2;
+	trasPuertaAbajo1 = KeyFrame[0].trasPuertaAbajo1;
+	trasPuertaAbajo2 = KeyFrame[0].trasPuertaAbajo2;
+	trasPuertaAscIzq = KeyFrame[0].trasPuertaAscIzq;
+	trasPuertaAscDer = KeyFrame[0].trasPuertaAscDer;
+
+	//Ascensor
 
 }
 
 void interpolation(void)
 {
 
-	KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
+	KeyFrame[0].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
 	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
-	
-	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+
+	KeyFrame[playIndex].rotIncIzq = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+	KeyFrame[playIndex].rotIncDer = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+	KeyFrame[playIndex].rotIncMusloIzq = (KeyFrame[playIndex + 1].rotMusloIzq - KeyFrame[playIndex].rotMusloIzq) / i_max_steps;
+	KeyFrame[playIndex].rotIncMusloDer = (KeyFrame[playIndex + 1].rotMusloDer - KeyFrame[playIndex].rotMusloDer) / i_max_steps;
+
+	KeyFrame[playIndex].rotIncTorso = (KeyFrame[playIndex + 1].rotTorso - KeyFrame[playIndex].rotTorso) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloDerX = (KeyFrame[playIndex + 1].trasMusloDerX - KeyFrame[playIndex].trasMusloDerX) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloDerY = (KeyFrame[playIndex + 1].trasMusloDerY - KeyFrame[playIndex].trasMusloDerY) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloDerZ = (KeyFrame[playIndex + 1].trasMusloDerZ - KeyFrame[playIndex].trasMusloDerZ) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloIzqX = (KeyFrame[playIndex + 1].trasMusloIzqX - KeyFrame[playIndex].trasMusloIzqX) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloIzqY = (KeyFrame[playIndex + 1].trasMusloIzqY - KeyFrame[playIndex].trasMusloIzqY) / i_max_steps;
+	KeyFrame[playIndex].trasIncMusloIzqZ = (KeyFrame[playIndex + 1].trasMusloIzqZ - KeyFrame[playIndex].trasMusloIzqZ) / i_max_steps;
+	KeyFrame[playIndex].trasIncPuertasAbajo = (KeyFrame[playIndex + 1].trasPuertaAbajo1 - KeyFrame[playIndex].trasPuertaAbajo1) / i_max_steps;
+	KeyFrame[playIndex].trasIncPuertasAbajo = (KeyFrame[playIndex + 1].trasPuertaAbajo2 - KeyFrame[playIndex].trasPuertaAbajo2) / i_max_steps;
+	KeyFrame[playIndex].trasIncPuertasAsc = (KeyFrame[playIndex + 1].trasPuertaAscDer - KeyFrame[playIndex].trasPuertaAscDer) / i_max_steps;
+	KeyFrame[playIndex].trasIncPuertasAsc = (KeyFrame[playIndex + 1].trasPuertaAscIzq - KeyFrame[playIndex].trasPuertaAscIzq) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodDerX = (KeyFrame[playIndex + 1].trasRodDerX - KeyFrame[playIndex].trasRodDerX) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodDerY = (KeyFrame[playIndex + 1].trasRodDerY - KeyFrame[playIndex].trasRodDerY) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodDerZ = (KeyFrame[playIndex + 1].trasRodDerZ - KeyFrame[playIndex].trasRodDerZ) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodIzqX = (KeyFrame[playIndex + 1].trasRodIzqX - KeyFrame[playIndex].trasRodIzqX) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodIzqY = (KeyFrame[playIndex + 1].trasRodIzqY - KeyFrame[playIndex].trasRodIzqY) / i_max_steps;
+	KeyFrame[playIndex].trasIncRodIzqZ = (KeyFrame[playIndex + 1].trasRodIzqZ - KeyFrame[playIndex].trasRodIzqZ) / i_max_steps;
+	KeyFrame[playIndex].trasIncTorsoX = (KeyFrame[playIndex + 1].trasTorsoX - KeyFrame[playIndex].trasTorsoX) / i_max_steps;
+	KeyFrame[playIndex].trasIncTorsoY = (KeyFrame[playIndex + 1].trasTorsoY - KeyFrame[playIndex].trasTorsoY) / i_max_steps;
+	KeyFrame[playIndex].trasIncTorsoZ = (KeyFrame[playIndex + 1].trasTorsoZ - KeyFrame[playIndex].trasTorsoZ) / i_max_steps;
+
 
 }
 
@@ -364,14 +809,38 @@ int main()
 
 	//Inicialización de KeyFrames
 	
-	for(int i=0; i<MAX_FRAMES; i++)
+	for (int i = 0; i < MAX_FRAMES; i++)
 	{
 		KeyFrame[i].posX = 0;
 		KeyFrame[i].incX = 0;
 		KeyFrame[i].incY = 0;
 		KeyFrame[i].incZ = 0;
-		KeyFrame[i].rotRodIzq = 0;
-		KeyFrame[i].rotInc = 0;
+		//Persona
+		KeyFrame[i].rotIncIzq = 0;
+		KeyFrame[i].rotIncDer = 0;
+		KeyFrame[i].rotIncMusloIzq = 0;
+		KeyFrame[i].rotIncMusloDer = 0;
+
+		KeyFrame[i].rotIncTorso = 0;
+		KeyFrame[i].trasIncMusloDerX = 0;
+		KeyFrame[i].trasIncMusloDerY = 0;
+		KeyFrame[i].trasIncMusloDerZ = 0;
+		KeyFrame[i].trasIncMusloIzqX = 0;
+		KeyFrame[i].trasIncMusloIzqY = 0;
+		KeyFrame[i].trasIncMusloIzqZ = 0;
+		KeyFrame[i].trasIncPuertasAbajo = 0;
+		KeyFrame[i].trasIncPuertasAbajo = 0;
+		KeyFrame[i].trasIncPuertasAsc = 0;
+		KeyFrame[i].trasIncPuertasAsc = 0;
+		KeyFrame[i].trasIncRodDerX = 0;
+		KeyFrame[i].trasIncRodDerY = 0;
+		KeyFrame[i].trasIncRodDerZ = 0;
+		KeyFrame[i].trasIncRodIzqX = 0;
+		KeyFrame[i].trasIncRodIzqY = 0;
+		KeyFrame[i].trasIncRodIzqZ = 0;
+		KeyFrame[i].trasIncTorsoX = 0;
+		KeyFrame[i].trasIncTorsoY = 0;
+		KeyFrame[i].trasIncTorsoZ = 0;
 	}
 
 
@@ -1707,12 +2176,20 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
 		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
-		model = glm::translate(model, glm::vec3(10.825f, 0.785f, 2.0f));
+		model = glm::translate(model, glm::vec3(-10.825f, 0.785f, 2.0f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscDer));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		puertaAscensorDerecha.Draw(lightingShader);
 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.0f, 0.0f, 701.5f));
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));;
+		model = glm::translate(model, glm::vec3(-10.3f, 0.665f, 1.75f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, trasAscensor, trasPuertaAscDer));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		torsoPersona.Draw(lightingShader);
 
 		glBindVertexArray(0);
 		// #####################################     ANIMACIONES   COMPLEJAS #########################################
@@ -2418,7 +2895,7 @@ void DoMovement()
 		animActivCerrar2 = true;
 	}
 
-	if (keys[GLFW_KEY_P]) {
+	if (keys[GLFW_KEY_2]) {
 		activAnimAscensor = true;
 	}
 
