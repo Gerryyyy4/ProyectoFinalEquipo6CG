@@ -325,6 +325,13 @@ int main()
 	Model postal((char*)"Models/AnimPostal/Postal.obj");
 	Model resorte((char*)"Models/AnimPostal/resorte.obj");
 	Model resorteInanimado((char*)"Models/AnimPostal/resorteInanimado.obj");
+	
+	//Persona
+	Model torsoPersona((char*)"Models/Persona/torso.obj");
+	Model muslo1Persona((char*)"Models/AnimPostal/muslo1.obj");
+	Model pierna1Persona((char*)"Models/Persona/pierna1.obj");
+	Model muslo2Persona((char*)"Models/AnimPostal/muslo2.obj");
+	Model pierna2Persona((char*)"Models/Persona/pierna2.obj");
 
 	//alberca
 	Model zona_alberca((char*)"Models/Spa-Lobby-Alberca/zona_alberca.obj");	
@@ -838,6 +845,72 @@ int main()
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		zona_restaurante.Draw(lightingShader);
+
+		//mesas restaurante
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(100.0f, 0.0f, 590.0f));
+		model = glm::scale(model, glm::vec3(15.0f, 15.0f, 15.0f));
+		model = glm::translate(model, glm::vec3(1.74f, 0.0f, 6.665f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//2
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//3
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//4
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//5
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//6
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//1
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//2
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//3
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//4
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//5
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+
+		//1
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//2
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//3
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+		//4
+		model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		mesaRestaurante.Draw(lightingShader);
+
 
 		////FOCOS
 		//// 		
