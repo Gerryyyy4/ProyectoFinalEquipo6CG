@@ -546,12 +546,12 @@ int main()
 
 	// Load textures
 	vector<const GLchar*> faces;
-	faces.push_back("SkyBox/right.tga");
-	faces.push_back("SkyBox/left.tga");
-	faces.push_back("SkyBox/top.tga");
-	faces.push_back("SkyBox/bottom.tga");
-	faces.push_back("SkyBox/back.tga");
-	faces.push_back("SkyBox/front.tga");
+	faces.push_back("SkyBox/posx.JPG");
+	faces.push_back("SkyBox/negx.JPG");
+	faces.push_back("SkyBox/posy.JPG");
+	faces.push_back("SkyBox/negy.JPG");
+	faces.push_back("SkyBox/posz.JPG");
+	faces.push_back("SkyBox/negz.JPG");
 	
 	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
 
